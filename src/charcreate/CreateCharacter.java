@@ -137,7 +137,7 @@ public class CreateCharacter {
 	//Prints all created character information
 	public void printCharacter()
 	{
-		System.out.printf("Name:\t%s\nClass:\t%s\nLevel:\t%d\nExperience:\t%f\n\n", name, classList.get(charClass),level, experience);
+		System.out.printf("Name:\t%s\nClass:\t%s\nLevel:\t%d\nHitpoints:\t%f\nExperience:\t%f\n\n", name, classList.get(charClass),level, hitpoints, experience);
 		printStats();
 		
 	}

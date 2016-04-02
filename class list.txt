@@ -1,1 +1,10 @@
 Wizard
+Fighter
+Rogue
+Barbarian
+Monk
+Priest
+Druid
+Dragonborn
+Cipher
+Ranger
