@@ -1,17 +1,20 @@
 package charcreate;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 import util.Dice;
 import util.UF;
 
 public class Character {
 	/*roll 4d6 for stats*/
 	//private final int WIZARD = 0, FIGHTER = 1, ROGUE = 2, MONK = 3;
-	private final ArrayList<CharClass> classList = new ArrayList<CharClass>();
+	private final ArrayList<String> classList = new ArrayList<String>();
 	private int charClass = -1;
 	private int level = 0;
 	private float experience = 0;
@@ -20,12 +23,18 @@ public class Character {
 	private int[] stats = new int[6];
 	private String[] statsList = {"Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"};
 	private String name = "";
+	private File classListLoc = new File("class list.txt"); 
 
 	public Character()
 	{
 		for(int i = 0; i < 6; i++)
 			stats[i] = 0;
-
+		try {
+			readClassList();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		createCharacter();
 		printCharacter();
 	};
@@ -105,6 +114,15 @@ public class Character {
 			System.out.printf("%s = %d\n", statsList[i],stats[i]);
 		}
 	}
+	
+	private void readClassList() throws FileNotFoundException
+	{
+		Scanner in = new Scanner(classListLoc);
+		while(in.hasNextLine())
+			classList.add(in.nextLine());
+		in.close();
+	}
+	
 	public void printCharacter()
 	{
 		System.out.printf("Name:\t%s\nClass:\t%s\nLevel:\t%d\nExperience:\t%f\n\n", name, classList.get(charClass),level, experience);
