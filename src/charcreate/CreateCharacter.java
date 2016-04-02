@@ -11,21 +11,28 @@ import java.util.Scanner;
 import util.Dice;
 import util.UF;
 
-public class Character {
+/**
+ * 
+ * @author Alex
+ * This class handles the creation of a DnD character
+ * It is currently not complete
+ *
+ */
+public class CreateCharacter {
 	/*roll 4d6 for stats*/
-	//private final int WIZARD = 0, FIGHTER = 1, ROGUE = 2, MONK = 3;
-	private final ArrayList<String> classList = new ArrayList<String>();
-	private int charClass = -1;
-	private int level = 0;
-	private float experience = 0;
-	private float hitpoints = 0;
-	//private Inventory
-	private int[] stats = new int[6];
-	private String[] statsList = {"Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"};
-	private String name = "";
-	private File classListLoc = new File("class list.txt"); 
 
-	public Character()
+	private final ArrayList<String> classList = new ArrayList<String>(); //store the available classes read from "class list.txt"
+	private int charClass = -1; //Integer corresponding to the class
+	private int level = 0; //initial level
+	private float experience = 0; //initial xp
+	private float hitpoints = 0; // initial hp
+	//private Inventory
+	private int[] stats = new int[6]; //initial stats; order = STR, DEX, CON, INT, WIS, CHA
+	private String[] statsList = {"Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"}; //A list of the stats in order
+	private String name = ""; //Character name
+	private File classListLoc = new File("class list.txt"); //Location of the classlist 
+
+	public CreateCharacter() //runs the character creation
 	{
 		for(int i = 0; i < 6; i++)
 			stats[i] = 0;
@@ -39,6 +46,7 @@ public class Character {
 		printCharacter();
 	};
 
+	// handles human input for the creation of the character
 	public void createCharacter()
 	{
 		Scanner in = new Scanner(System.in);
@@ -70,12 +78,14 @@ public class Character {
 		in.close();
 	}
 
+	//prints the current class list
 	private void printClassList()
 	{
 		for(int i = 0; i < classList.size(); i++)
 			System.out.printf("%d: %s\n", i+1, classList.get(i));
 	}
 
+	//Checks if the input is a valid class option
 	private boolean isValidClass(String in)
 	{
 		if(UF.isInt(in))
@@ -91,8 +101,7 @@ public class Character {
 	}
 
 
-
-
+	//Returns an integer value corresponding to the character's class
 	private int getCharCreateClass(String cl)
 	{
 		if(UF.isInt(cl))
@@ -106,6 +115,7 @@ public class Character {
 		return 0;
 	}
 	
+	//Prints the created character's stats
 	private void printStats()
 	{
 		System.out.printf("Character Stats:\n");
@@ -115,6 +125,7 @@ public class Character {
 		}
 	}
 	
+	//Reads the class list from file
 	private void readClassList() throws FileNotFoundException
 	{
 		Scanner in = new Scanner(classListLoc);
@@ -123,6 +134,7 @@ public class Character {
 		in.close();
 	}
 	
+	//Prints all created character information
 	public void printCharacter()
 	{
 		System.out.printf("Name:\t%s\nClass:\t%s\nLevel:\t%d\nExperience:\t%f\n\n", name, classList.get(charClass),level, experience);
@@ -133,7 +145,7 @@ public class Character {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Character c = new Character();
+		CreateCharacter c = new CreateCharacter();
 
 	}
 
