@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class FileIO {
 
+	//Creates a file with the given Path
 	public static void createFile(Path file) throws IOException
 	{		
 		if(Files.notExists(file))
@@ -22,6 +23,7 @@ public class FileIO {
 
 	}
 
+	//Deletes a file at the given Path
 	public static void deleteFile(Path file) throws IOException
 	{
 		if(Files.notExists(file))
@@ -32,7 +34,8 @@ public class FileIO {
 			System.out.println(file + " has been deleted.");
 		}
 	}
-
+	
+	//Writes string data to a file at the given Path
 	public static void writeToFile(Path file, String data) throws IOException
 	{
 		if(Files.notExists(file))

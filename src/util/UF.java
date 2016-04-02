@@ -2,8 +2,10 @@ package util;
 
 import java.util.List;
 
+//Usefule functions
 public class UF {
 	
+	//Checks if a given string is an integer
 	public static boolean isInt(String str)
 	{
 		if (str == null) {
@@ -29,6 +31,7 @@ public class UF {
 		return true;
 	}
 
+	//prints the contents of a List l
 	public static void printList(List l)
 	{
 		System.out.print("[");

@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Random;
 
 public class Dice {
-	// rule is a number indicating whether to take the highest or lowest dice thrown
-	// for example, a rule of -3 indicates taking the lowest three dice for the sum
 	private static Random ran = new Random();
 
+	//Rolls n m-sided dice with a modifier and a rule for which dice to keep 
+	// rule is a number indicating whether to take the highest or lowest dice thrown
+	// for example, a rule of -3 indicates taking the lowest three dice for the sum
+	// A loud roll prints the dice values, kept values, and the sum
+	//Returns the sum of the dice + a modifier according to the rule
 	@SuppressWarnings("null")
 	public static int rollLoudSum(int numDice, int numSides, int modifier, int rule)
 	{
@@ -23,12 +26,12 @@ public class Dice {
 			filtered.add(r);
 		}
 
-		
+
 		Collections.sort(filtered);
 		System.out.print("Rolls = " );
 		UF.printList(rolls);
 
-		
+
 		if(Math.abs(rule)<numDice && rule != 0)
 		{
 			if(rule < 0)
@@ -40,7 +43,7 @@ public class Dice {
 		}
 		System.out.print("Kept = ");
 		UF.printList(filtered);
-		
+
 		for(int i = 0; i < filtered.size(); i++)
 		{
 			System.out.print(filtered.get(i) + " + ");
@@ -62,12 +65,12 @@ public class Dice {
 			filtered.add(r);
 		}
 
-		
+
 		Collections.sort(filtered);
 		//System.out.print("Rolls = " );
 		//UF.printList(rolls);
 
-		
+
 		if(Math.abs(rule)<numDice && rule != 0)
 		{
 			if(rule < 0)
@@ -79,7 +82,7 @@ public class Dice {
 		}
 		//System.out.print("Kept = ");
 		//UF.printList(filtered);
-		
+
 		for(int i = 0; i < filtered.size(); i++)
 		{
 			System.out.print(filtered.get(i) + " + ");
@@ -89,8 +92,8 @@ public class Dice {
 		System.out.println(modifier + " = " + value + "");
 		return value;
 	}
-	
-	
+
+
 
 	public static void main(String[] args) {
 		rollLoudSum(4,6,1,-3);
