@@ -2,10 +2,14 @@
 #{id number}
 #	r:name = "race name"
 #	r:bonus = "stat",amount
+
 {1}
 	r:name = "Dragonborn"
 	r:bonus = "Strength",2
 	r:bonus = "Charisma",1
+
+#	Dwarves have 3 subraces
+
 {2}
 	r:name = "Hill Dwarf"
 	r:bonus = "Constitution",2
@@ -18,3 +22,98 @@
 	r:name = "Duergar"
 	r:bonus = "Constitution",2
 	r:bonus = "strength",1
+	
+#	Elves have 3 subraces
+
+{5}
+	r:name = "High Elf"
+	r:bonus = "Dexterity",2
+	r:bonus = "Intelligence",1
+{6}
+	r:name = "Wood Elf"
+	r:bonus = "Dexterity",2
+	r:bonus = "Wisdom",1
+{7}
+	r:name = "Dark Elf"
+	r:bonus = "Dexterity",2
+	r:bonus = "Charisma",1
+	
+#	Gnomes have 3 subraces
+
+{8}
+	r:name = "Forest Gnome"
+	r:bonus = "Intelligence",2
+	r:bonus = "Dexterity",1
+{9}
+	r:name = "Rock Gnome"
+	r:bonus = "Intelligence",2
+	r:bonus = "Constitution",1
+{10}
+	r:name = "Deep Gnome"
+	r:bonus = "Intelligence",2
+	r:bonus = "Dexterity",1
+	
+{11}
+	r:name = "Half-elf"
+	r:bonus = "Charisma",2
+	#r:bonus = "choice",1
+	#r:bonus = "choice",1
+	
+{12}
+	r:name = "Half-orc"
+	r:bonus = "Strength",2
+	r:bonus = "Constitution",1
+
+#	Halflings have 2 subraces
+
+{13}
+	r:name = "Lightfoot Halfling"
+	r:bonus = "Dexterity",2
+	r:bonus = "Charisma",1
+{14}
+	r:name = "Stout Halfling"
+	r:bonus = "Dexterity",2
+	r:bonus = "Constitution",1
+
+#Bonus will change
+{15}
+	r:name = "Human"
+	r:bonus = "Strength",1
+	r:bonus = "constitution",1
+	r:bonus = "dexterity",1
+	r:bonus = "intelligence",1
+	r:bonus = "wisdom",1
+	r:bonus = "charisma",1
+	
+{16}
+	r:name = "Tiefling"
+	r:bonus = "intelligence",1
+	r:bonus = "charisma",2
+	
+{17}
+	r:name = "Aarakocra"
+	r:bonus = "dexterity",2
+	r:bonus = "wisdom",1
+
+#Genasi have 4 subraces
+{18}
+	r:name = "Air Genasi"
+	r:bonus = "constitution",2
+	r:bonus = "dexterity",1
+{19}
+	r:name = "Fire Genasi"
+	r:bonus = "constitution",2
+	r:bonus = "intelligence",1
+{20}
+	r:name = "Earth Genasi"
+	r:bonus = "constitution",2
+	r:bonus = "strength",1
+{21}
+	r:name = "Water Genasi"
+	r:bonus = "constitution",2
+	r:bonus = "wisdom",2
+	
+{22}
+	r:name = "Goliath"
+	r:bonus = "constitution",1
+	r:bonus = "strength",2

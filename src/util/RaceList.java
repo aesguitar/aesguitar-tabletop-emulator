@@ -40,14 +40,14 @@ public class RaceList{ //An ArrayList containing all available races in the game
 		}
 		lineNumber++;
 		String line = in.nextLine().trim();
-		String tmp = line;
+		String tmp = line.trim();
 		while(in.hasNextLine())
 		{		
 
 			//System.out.println(tmp);
-			if(!tmp.startsWith("#"))
+			if(!tmp.startsWith("#") && !tmp.equalsIgnoreCase(""))
 			{
-				if(tmp.startsWith("{"))
+				if(tmp.trim().startsWith("{"))
 				{
 
 					for(int i = 0; i < b.length; i++)
@@ -60,8 +60,14 @@ public class RaceList{ //An ArrayList containing all available races in the game
 					tmp = in.nextLine().trim();
 					lineNumber++;
 					//System.out.println(tmp);
-					while(tmp.startsWith("r:"))
-					{	
+					while(tmp.startsWith("r:") || tmp.startsWith("#"))
+					{
+						if(tmp.startsWith("#"))
+						{
+							tmp = in.nextLine().trim();
+							lineNumber++;
+							continue;
+						}
 						tmp = tmp.replaceAll("r:", "");
 						if(tmp.startsWith("name"))
 						{
@@ -108,7 +114,7 @@ public class RaceList{ //An ArrayList containing all available races in the game
 							}
 							else
 							{
-								throw new ParseException("Unknown bonus: " + line, lineNumber);
+								throw new ParseException("Unknown bonus: \"" + tmp.substring(0, tmp.length()-1) + "\" at line " + (lineNumber-1), lineNumber);
 							}
 						}
 						else
@@ -119,7 +125,11 @@ public class RaceList{ //An ArrayList containing all available races in the game
 					/*if(!isIdUnique(id))
 						throw new IdConflictException("Race ID conflict: " + id + "; " + rname + " and " + get(id).getName() + ". Line number " + (lineNumber-5));*/
 					racelist.add(new Race(id, rname, Arrays.copyOf(b, b.length)));
-				}			
+				}
+				else if(tmp.trim().startsWith("r:"))
+				{
+					throw new ParseException("ID missing at line " + (lineNumber-2) + ".",lineNumber);
+				}
 			}
 			else{
 				line = in.nextLine();
@@ -160,6 +170,8 @@ public class RaceList{ //An ArrayList containing all available races in the game
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		RaceList r = null;
+		Timer t = new Timer();
+		t.start();
 		try {
 			r = new RaceList(new File("race-list.txt"));
 		} catch (IdConflictException e) {
@@ -170,9 +182,13 @@ public class RaceList{ //An ArrayList containing all available races in the game
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		t.end();
+		System.out.printf("Elapsed time: %f\n\n", (float)t.difference()/1000.0);
 		Iterator<Race> i = r.getRaceList().iterator();
 		while(i.hasNext())
-			i.next().printRace();
+			{i.next().printRace();
+		System.out.println("");}
+		/**/
 	}
 
 }
