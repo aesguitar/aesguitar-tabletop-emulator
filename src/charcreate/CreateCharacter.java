@@ -28,9 +28,8 @@ public class CreateCharacter {
 	private float hitpoints = 0; // initial hp
 	//private Inventory
 	private int[] stats = new int[6]; //initial stats; order = STR, DEX, CON, INT, WIS, CHA
-	private String[] statsList = {"Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"}; //A list of the stats in order
 	private String name = ""; //Character name
-	private File classListLoc = new File("class list.txt"); //Location of the classlist 
+	private File classListLoc = new File("class-list.txt"); //Location of the classlist 
 
 	public CreateCharacter() //runs the character creation
 	{
@@ -65,7 +64,7 @@ public class CreateCharacter {
 			System.out.println("Rolling Stats: ");
 			for(int i = 0; i < 5; i++)
 			{
-				System.out.print(statsList[i] + " = ");
+				System.out.print(UF.statsList[i] + " = ");
 				stats[i] = Dice.rollSum(4, 6, 0, 3);
 			}
 			System.out.print("Keep stats? (yes/no)\t");
@@ -121,7 +120,7 @@ public class CreateCharacter {
 		System.out.printf("Character Stats:\n");
 		for(int i = 0; i < 5; i++)
 		{
-			System.out.printf("%s = %d\n", statsList[i],stats[i]);
+			System.out.printf("%s = %d\n", UF.statsList[i],stats[i]);
 		}
 	}
 	

@@ -1,4 +1,4 @@
-package testing;
+package util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,22 +8,32 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class Test {
+import testing.Race;
 
-	public static void main(String[] args) throws ParseException {
-		// TODO Auto-generated method stub
+public class RaceList{ //An ArrayList containing all available races in the game (from a file)
 
-		File rl = new File("race-list.txt");
+	private ArrayList<Race> racelist = new ArrayList<Race>();
+	private File listLoc;
 
+	//Requires the location of the race-list file
+	public RaceList(File race_list) throws IdConflictException, ParseException
+	{
+		listLoc = race_list;
+		buildList();
+	}
+
+	//Builds the list of races
+	private void buildList() throws IdConflictException, ParseException
+	{
 		Scanner in = null;
-		ArrayList<Race> rlist = new ArrayList<Race>();
-		int lineNumber = 0;
+		//ArrayList<Race> rlist = new ArrayList<Race>();
+		int lineNumber = 1;
 		int[] b = new int[6];
 		int id = 0;
 		String rname = "";
 
 		try {
-			in = new Scanner(rl);
+			in = new Scanner(listLoc);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,7 +44,7 @@ public class Test {
 		while(in.hasNextLine())
 		{		
 
-			System.out.println(tmp);
+			//System.out.println(tmp);
 			if(!tmp.startsWith("#"))
 			{
 				if(tmp.startsWith("{"))
@@ -45,9 +55,10 @@ public class Test {
 
 					String ids = tmp.replaceAll("\\{", "").replaceAll("\\}", "");
 					id = Integer.parseInt(ids);
-					System.out.printf("id = %d\n", id);
+					
+					//System.out.printf("id = %d\n", id);
 					tmp = in.nextLine().trim();
-
+					lineNumber++;
 					//System.out.println(tmp);
 					while(tmp.startsWith("r:"))
 					{	
@@ -56,6 +67,8 @@ public class Test {
 						{
 							tmp = tmp.replaceFirst("name","").trim().replace("=", "").trim().replaceAll("\"", "");
 							rname = tmp;
+							if(!isIdUnique(id))
+								throw new IdConflictException("Race ID conflict: " + id + "; " + rname + " and " + get(id).getName() + ". Line number " + (lineNumber-2));
 							//System.out.printf("name = %s\n", rname);
 						}
 						else if(tmp.startsWith("bonus"))
@@ -101,20 +114,65 @@ public class Test {
 						else
 							throw new ParseException("Unknown Parameter: " + line.replaceAll("r:", ""), lineNumber);
 						if(in.hasNextLine())
-							tmp = in.nextLine().trim();
+							{tmp = in.nextLine().trim();lineNumber++;}
 					}
-					rlist.add(new Race(id, rname, Arrays.copyOf(b, b.length)));	
+					/*if(!isIdUnique(id))
+						throw new IdConflictException("Race ID conflict: " + id + "; " + rname + " and " + get(id).getName() + ". Line number " + (lineNumber-5));*/
+					racelist.add(new Race(id, rname, Arrays.copyOf(b, b.length)));
 				}			
 			}
 			else{
 				line = in.nextLine();
 				tmp =line;
+				lineNumber++;
 			}
 		}
-		System.out.printf("\n\n\nRace list: \n\n");
-		Iterator<Race> it = rlist.iterator();
+		/*System.out.printf("Race list: \n\n");
+		Iterator<Race> it = racelist.iterator();
 		while(it.hasNext())
-			{it.next().printRace(); System.out.println();}
+		{it.next().printRace(); System.out.println();}*/
 
 	}
+	
+	//returns the race with the specific race id
+	public Race get(int raceId)
+	{
+		for(int i = 0; i < racelist.size(); i++)
+		{
+			if(racelist.get(i).getID() == raceId)
+				return racelist.get(i);
+		}
+		
+		return null;
+	}
+	
+	//returns the race list as an ArrayList
+	public ArrayList<Race> getRaceList()
+	{
+		return racelist;
+	}
+
+	private boolean isIdUnique(int id)
+	{
+		return (get(id) == null);			
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		RaceList r = null;
+		try {
+			r = new RaceList(new File("race-list.txt"));
+		} catch (IdConflictException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("ID Conflict.");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Iterator<Race> i = r.getRaceList().iterator();
+		while(i.hasNext())
+			i.next().printRace();
+	}
+
 }

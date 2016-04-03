@@ -4,6 +4,7 @@ import java.util.List;
 
 //Usefule functions
 public class UF {
+	public static final String[] statsList = {"Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"};//A list of the stats in order
 	
 	//Checks if a given string is an integer
 	public static boolean isInt(String str)
