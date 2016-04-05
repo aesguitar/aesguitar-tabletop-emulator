@@ -117,3 +117,5 @@
 	r:name = "Goliath"
 	r:bonus = "constitution",1
 	r:bonus = "strength",2
+	
+#End basic races
