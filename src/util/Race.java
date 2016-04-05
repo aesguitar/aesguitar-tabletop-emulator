@@ -1,7 +1,5 @@
 package util;
 
-import util.UF;
-
 public class Race {
 	
 	private String name = "";
