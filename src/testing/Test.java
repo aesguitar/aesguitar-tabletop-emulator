@@ -1,31 +1,16 @@
 package testing;
 
-import java.awt.EventQueue;
-import java.io.File;
-import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import charcreate.CreateCharacter;
-import charcreate.CreationForm;
-import util.IdConflictException;
-import util.RaceList;
-
-public class Test extends CreateCharacter{
-
-	@Override
-	public void createCharacter()
-	{
-		EventQueue.invokeLater(new Runnable() {
-			public void run()
-			{
-				CreationForm t = new CreationForm(rl);
-				t.frmCharacterCreation.setVisible(true);
-			}
-		});
-	}
+public class Test{
+	public static ArrayList<String> inputs = new ArrayList<String>();
 
 	public static void main(String[] args){
-		RaceList rl = new RaceList(new File("race-list.txt"));
-		Test t = new Test();
-		t.createCharacter();
+		//RaceList rl = new RaceList(new File("race-list.txt"));
+		
+		Iterator<String> it = inputs.iterator();
+		while(it.hasNext())
+			System.out.println(it.next());
 	}
 }

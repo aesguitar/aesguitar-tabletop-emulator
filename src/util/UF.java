@@ -1,5 +1,6 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //Usefule functions
@@ -45,6 +46,7 @@ public class UF {
 		System.out.print("]\n");
 		
 	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
