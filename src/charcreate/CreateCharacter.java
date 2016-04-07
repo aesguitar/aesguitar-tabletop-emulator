@@ -24,7 +24,7 @@ public class CreateCharacter {
 	/*roll 4d6 for stats*/
 
 	private final ArrayList<String> classList = new ArrayList<String>(); //store the available classes read from "class list.txt"
-	private final RaceList rl = new RaceList(new File("race-list.txt"));
+	public final RaceList rl = new RaceList(new File("race-list.txt"));
 	private int charClass = -1; //Integer corresponding to the class
 	private int charRace = -1;
 	private int level = 0; //initial level
@@ -52,8 +52,8 @@ public class CreateCharacter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		createCharacter();
-		printCharacter();
+		//createCharacter();
+		//printCharacter();
 	};
 
 	// handles human input for the creation of the character
@@ -83,10 +83,10 @@ public class CreateCharacter {
 		
 		do{
 			System.out.println("Rolling Stats: ");
+			stats = rollStats();
 			for(int i = 0; i < UF.statsList.length; i++)
 			{
-				System.out.print(UF.statsList[i] + " = ");
-				stats[i] = Dice.rollSum(4, 6, 0, 3);
+				System.out.print(UF.statsList[i] + " = " + stats[i]);
 			}
 			System.out.print("Keep stats? (yes/no)\t");
 			rr = in.nextLine();
@@ -171,6 +171,18 @@ public class CreateCharacter {
 		System.out.printf("Name:\t%s\nRace:\t%s\nClass:\t%s\nLevel:\t%d\nHitpoints:\t%f\nExperience:\t%f\n\n", name, rl.get(charRace).getName(),classList.get(charClass),level, hitpoints, experience);
 		printStats();
 		
+	}
+	
+	public int[] rollStats()
+	{
+		int[] sRoll = new int[6];
+		for(int i = 0; i < UF.statsList.length; i++)
+		{
+			//System.out.print(UF.statsList[i] + " = ");
+			sRoll[i] = Dice.rollSum(4, 6, 0, 3);
+		}
+		
+		return sRoll;
 	}
 
 

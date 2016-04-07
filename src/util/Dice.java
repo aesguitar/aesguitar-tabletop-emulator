@@ -84,11 +84,11 @@ public class Dice {
 
 		for(int i = 0; i < filtered.size(); i++)
 		{
-			System.out.print(filtered.get(i) + " + ");
+			//System.out.print(filtered.get(i) + " + ");
 			value += filtered.get(i);
 		}
 		value += modifier;
-		System.out.println(modifier + " = " + value + "");
+		//System.out.println(modifier + " = " + value + "");
 		return value;
 	}
 

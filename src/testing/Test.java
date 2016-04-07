@@ -1,20 +1,31 @@
 package testing;
 
+import java.awt.EventQueue;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Scanner;
 
-import org.eclipse.ui.forms.editor.FormEditor;
+import charcreate.CreateCharacter;
+import charcreate.CreationForm;
+import util.IdConflictException;
+import util.RaceList;
 
+public class Test extends CreateCharacter{
 
-import util.Race;
+	@Override
+	public void createCharacter()
+	{
+		EventQueue.invokeLater(new Runnable() {
+			public void run()
+			{
+				CreationForm t = new CreationForm(rl);
+				t.frmCharacterCreation.setVisible(true);
+			}
+		});
+	}
 
-public class Test {
-
-	public static void main(String[] args) throws ParseException {		
+	public static void main(String[] args){
+		RaceList rl = new RaceList(new File("race-list.txt"));
+		Test t = new Test();
+		t.createCharacter();
 	}
 }
