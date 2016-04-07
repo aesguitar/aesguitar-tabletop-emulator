@@ -8,22 +8,19 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import testing.Race;
-
 public class RaceList{ //An ArrayList containing all available races in the game (from a file)
 
 	private ArrayList<Race> racelist = new ArrayList<Race>();
 	private File listLoc;
 
 	//Requires the location of the race-list file
-	public RaceList(File race_list) throws IdConflictException, ParseException
+	public RaceList(File race_list)
 	{
 		listLoc = race_list;
-		buildList();
 	}
 
 	//Builds the list of races
-	private void buildList() throws IdConflictException, ParseException
+	public void buildList() throws IdConflictException, ParseException
 	{
 		Scanner in = null;
 		//ArrayList<Race> rlist = new ArrayList<Race>();
@@ -144,6 +141,20 @@ public class RaceList{ //An ArrayList containing all available races in the game
 
 	}
 	
+	public Race get(String name)
+	{
+		Iterator<Race> it = racelist.iterator();
+		while(it.hasNext())
+		{
+			Race r = it.next();
+			if(name.equalsIgnoreCase(r.getName()))
+			{
+				return r;
+			}
+		}
+		return null;
+	}
+	
 	//returns the race with the specific race id
 	public Race get(int raceId)
 	{
@@ -167,18 +178,29 @@ public class RaceList{ //An ArrayList containing all available races in the game
 		return (get(id) == null);			
 	}
 	
+	public int getRaceId(String name)
+	{
+		Iterator<Race> it = racelist.iterator();
+		while(it.hasNext())
+		{
+			Race r = it.next();
+			if(name.equalsIgnoreCase(r.getName()))
+			{
+				return r.getID();
+			}
+		}
+		return -1;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		RaceList r = null;
 		Timer t = new Timer();
 		t.start();
+		r = new RaceList(new File("race-list.txt"));
 		try {
-			r = new RaceList(new File("race-list.txt"));
-		} catch (IdConflictException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("ID Conflict.");
-		} catch (ParseException e) {
+			r.buildList();
+		} catch (IdConflictException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

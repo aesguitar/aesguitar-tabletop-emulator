@@ -2,10 +2,15 @@ package charcreate;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import util.Dice;
+import util.IdConflictException;
+import util.Race;
+import util.RaceList;
 import util.UF;
 
 /**
@@ -19,7 +24,9 @@ public class CreateCharacter {
 	/*roll 4d6 for stats*/
 
 	private final ArrayList<String> classList = new ArrayList<String>(); //store the available classes read from "class list.txt"
+	private final RaceList rl = new RaceList(new File("race-list.txt"));
 	private int charClass = -1; //Integer corresponding to the class
+	private int charRace = -1;
 	private int level = 0; //initial level
 	private float experience = 0; //initial xp
 	private float hitpoints = 0; // initial hp
@@ -34,7 +41,14 @@ public class CreateCharacter {
 			stats[i] = 0;
 		try {
 			readClassList();
+			rl.buildList();
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IdConflictException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -50,8 +64,18 @@ public class CreateCharacter {
 		name = in.nextLine();
 		String cl = "";
 		String rr = "";
+		String ra = "";
+		
 		do{
-			System.out.println("What is you class?");
+			System.out.println("What is your race?");
+			//printClassList();
+			ra = in.nextLine();
+		} while(!isValidRace(ra));
+		charRace = rl.getRaceId(ra);
+		
+		
+		do{
+			System.out.println("What is your class?");
 			printClassList();
 			cl = in.nextLine();
 		} while(!isValidClass(cl));
@@ -59,7 +83,7 @@ public class CreateCharacter {
 		
 		do{
 			System.out.println("Rolling Stats: ");
-			for(int i = 0; i < 5; i++)
+			for(int i = 0; i < UF.statsList.length; i++)
 			{
 				System.out.print(UF.statsList[i] + " = ");
 				stats[i] = Dice.rollSum(4, 6, 0, 3);
@@ -84,7 +108,7 @@ public class CreateCharacter {
 	//Checks if the input is a valid class option
 	private boolean isValidClass(String in)
 	{
-		if(UF.isInt(in))
+		if(UF.isInt(in)&&Integer.parseInt(in)>0&&Integer.parseInt(in)<=classList.size())
 			return true;
 		else
 			for(int i = 0; i < classList.size(); i++)
@@ -93,6 +117,17 @@ public class CreateCharacter {
 					return true;
 			}
 
+		return false;
+	}
+	
+	private boolean isValidRace(String in)
+	{
+		Iterator<Race> it = rl.getRaceList().iterator();
+		while(it.hasNext())
+		{
+			if(in.equalsIgnoreCase(it.next().getName()))
+				return true;
+		}
 		return false;
 	}
 
@@ -115,7 +150,7 @@ public class CreateCharacter {
 	private void printStats()
 	{
 		System.out.printf("Character Stats:\n");
-		for(int i = 0; i < 5; i++)
+		for(int i = 0; i < UF.statsList.length; i++)
 		{
 			System.out.printf("%s = %d\n", UF.statsList[i],stats[i]);
 		}
@@ -133,7 +168,7 @@ public class CreateCharacter {
 	//Prints all created character information
 	public void printCharacter()
 	{
-		System.out.printf("Name:\t%s\nClass:\t%s\nLevel:\t%d\nHitpoints:\t%f\nExperience:\t%f\n\n", name, classList.get(charClass),level, hitpoints, experience);
+		System.out.printf("Name:\t%s\nRace:\t%s\nClass:\t%s\nLevel:\t%d\nHitpoints:\t%f\nExperience:\t%f\n\n", name, rl.get(charRace).getName(),classList.get(charClass),level, hitpoints, experience);
 		printStats();
 		
 	}
