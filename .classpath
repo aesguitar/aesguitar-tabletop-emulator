@@ -25,8 +25,6 @@
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding_1.5.0.v20150422-0725.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.source_1.5.0.v20150422-0725.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.observable_1.5.0.v20150422-0725.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.observable.source_1.5.0.v20150422-0725.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.jface.databinding_1.7.0.v20150406-2148.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.jface.databinding.source_1.7.0.v20150406-2148.jar"/>
-	<classpathentry kind="lib" path="jgoodies-common-1.8.0.jar" sourcepath="jgoodies-common-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

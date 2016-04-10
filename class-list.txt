@@ -1,12 +1,22 @@
-Barbarian
-Bard
-Cleric
-Druid
-Fighter
-Monk
-Paladin
-Ranger
-Rogue
-Sorcerer
-Warlock
-Wizard
+{1}
+	c:name = "Bard"
+{2}
+	c:name = "Cleric"
+{3}
+	c:name = "Druid"
+{4}
+	c:name = "Fighter"
+{5}
+	c:name = "Monk"
+{6}
+	c:name = "Paladin"
+{7}
+	c:name = "Ranger"
+{8}
+	c:name = "Rogue"
+{9}
+	c:name = "Sorcerer"
+{10}
+	c:name = "Warlock"
+{11}
+	c:name = "Wizard"

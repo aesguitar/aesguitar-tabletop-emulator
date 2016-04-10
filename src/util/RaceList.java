@@ -205,7 +205,7 @@ public class RaceList{ //An ArrayList containing all available races in the game
 			e.printStackTrace();
 		}
 		t.end();
-		System.out.printf("Elapsed time: %f\n\n", (float)t.difference()/1000.0);
+		System.out.printf("Elapsed time: %f\n\n", t.difference()/1000.0);
 		Iterator<Race> i = r.getRaceList().iterator();
 		while(i.hasNext())
 			{i.next().printRace();

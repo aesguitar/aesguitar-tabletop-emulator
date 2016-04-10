@@ -44,8 +44,8 @@ public class FileIO {
 		Files.copy(file, contents);
 		
 		data = contents.toString("UTF-8").concat(data);
-		System.out.println("File contents: ");
-		System.out.println(contents.toString("UTF-8"));
+		//System.out.println("File contents: ");
+		//System.out.println(contents.toString("UTF-8"));
 		
 		Files.write(file, data.getBytes());
 	}
