@@ -75,7 +75,6 @@
 	r:bonus = "Dexterity",2
 	r:bonus = "Constitution",1
 
-#Bonus will change
 {15}
 	r:name = "Human"
 	r:bonus = "Strength",1

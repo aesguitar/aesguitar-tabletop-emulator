@@ -2,11 +2,16 @@ package charcreate;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
+import util.Character;
+import util.ClassList;
 import util.Dice;
 import util.IdConflictException;
 import util.Race;
@@ -23,13 +28,13 @@ import util.UF;
 public class CreateCharacter {
 	/*roll 4d6 for stats*/
 
-	private final ArrayList<String> classList = new ArrayList<String>(); //store the available classes read from "class list.txt"
-	public final RaceList rl = new RaceList(new File("race-list.txt"));
+	private final ClassList cl = new ClassList(UF.classLoc); //store the available classes read from "class list.txt"
+	public final RaceList rl = new RaceList(UF.raceLoc);
 	private int charClass = -1; //Integer corresponding to the class
 	private int charRace = -1;
-	private int level = 0; //initial level
-	private float experience = 0; //initial xp
-	private float hitpoints = 0; // initial hp
+	//	private int level = 0; //initial level
+	//	private float experience = 0; //initial xp
+	//	private float hitpoints = 0; // initial hp
 	//private Inventory
 	private int[] stats = new int[6]; //initial stats; order = STR, DEX, CON, INT, WIS, CHA
 	private String name = ""; //Character name
@@ -40,11 +45,8 @@ public class CreateCharacter {
 		for(int i = 0; i < 6; i++)
 			stats[i] = 0;
 		try {
-			readClassList();
+			cl.buildList();
 			rl.buildList();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IdConflictException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,7 +59,7 @@ public class CreateCharacter {
 	};
 
 	// handles human input for the creation of the character
-	public void createCharacter()
+	/*public void createCharacter()
 	{
 		Scanner in = new Scanner(System.in);
 		System.out.println("What is your name adventurer?\t");
@@ -65,22 +67,22 @@ public class CreateCharacter {
 		String cl = "";
 		String rr = "";
 		String ra = "";
-		
+
 		do{
 			System.out.println("What is your race?");
 			//printClassList();
 			ra = in.nextLine();
 		} while(!isValidRace(ra));
 		charRace = rl.getRaceId(ra);
-		
-		
+
+
 		do{
 			System.out.println("What is your class?");
 			printClassList();
 			cl = in.nextLine();
 		} while(!isValidClass(cl));
 		charClass = getCharCreateClass(cl);
-		
+
 		do{
 			System.out.println("Rolling Stats: ");
 			stats = rollStats();
@@ -92,103 +94,37 @@ public class CreateCharacter {
 			rr = in.nextLine();
 			System.out.println();
 		}while(rr.contains("n"));
-		
-		
-		
+
+
+
 		in.close();
 	}
+	 */
 
-	//prints the current class list
-	private void printClassList()
+	public void createCharacter() throws IOException
 	{
-		for(int i = 0; i < classList.size(); i++)
-			System.out.printf("%d: %s\n", i+1, classList.get(i));
-	}
-
-	//Checks if the input is a valid class option
-	private boolean isValidClass(String in)
-	{
-		if(UF.isInt(in)&&Integer.parseInt(in)>0&&Integer.parseInt(in)<=classList.size())
-			return true;
-		else
-			for(int i = 0; i < classList.size(); i++)
-			{
-				if(in.equalsIgnoreCase(classList.get(i)))
-					return true;
-			}
-
-		return false;
-	}
-	
-	private boolean isValidRace(String in)
-	{
-		Iterator<Race> it = rl.getRaceList().iterator();
-		while(it.hasNext())
-		{
-			if(in.equalsIgnoreCase(it.next().getName()))
-				return true;
-		}
-		return false;
-	}
-
-
-	//Returns an integer value corresponding to the character's class
-	private int getCharCreateClass(String cl)
-	{
-		if(UF.isInt(cl))
-			return Integer.parseInt(cl)-1;
-		else
-			for(int i = 0; i < classList.size(); i++)
-			{
-				if(cl.equalsIgnoreCase(classList.get(i)))
-					return i;
-			}
-		return 0;
-	}
-	
-	//Prints the created character's stats
-	private void printStats()
-	{
-		System.out.printf("Character Stats:\n");
-		for(int i = 0; i < UF.statsList.length; i++)
-		{
-			System.out.printf("%s = %d\n", UF.statsList[i],stats[i]);
-		}
-	}
-	
-	//Reads the class list from file
-	private void readClassList() throws FileNotFoundException
-	{
-		Scanner in = new Scanner(classListLoc);
-		while(in.hasNextLine())
-			classList.add(in.nextLine());
-		in.close();
-	}
-	
-	//Prints all created character information
-	public void printCharacter()
-	{
-		System.out.printf("Name:\t%s\nRace:\t%s\nClass:\t%s\nLevel:\t%d\nHitpoints:\t%f\nExperience:\t%f\n\n", name, rl.get(charRace).getName(),classList.get(charClass),level, hitpoints, experience);
-		printStats();
-		
-	}
-	
-	public int[] rollStats()
-	{
-		int[] sRoll = new int[6];
-		for(int i = 0; i < UF.statsList.length; i++)
-		{
-			//System.out.print(UF.statsList[i] + " = ");
-			sRoll[i] = Dice.rollSum(4, 6, 0, 3);
-		}
-		
-		return sRoll;
+		CreationForm cf = new CreationForm(rl,cl);
+		int confirm = 0;
+		do{
+			cf.setVisible(true);
+			cf.setVisible(true);
+			confirm = JOptionPane.showConfirmDialog(null, "Are you sure?");
+		}while(confirm!=1);
+		Character ch = new Character(cf.finalStats, cf.finalName, cf.finalWeight,cf.finalHeight,cf.finalRace,cf.finalClass);
+		ch.writeCharacterToFile();
+		ch.printCharacter();
 	}
 
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		CreateCharacter c = new CreateCharacter();
+		try {
+			c.createCharacter();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

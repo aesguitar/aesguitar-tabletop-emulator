@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Arrays;
+
 public class Race {
 	
 	private String name = "";
@@ -42,6 +44,11 @@ public class Race {
 				System.out.printf("%s:\t%d\n", UF.statsList[i], bonus[i]);
 			}
 		}
+	}
+	
+	public void setBonuses(int [] bonuses)
+	{
+		bonus = Arrays.copyOf(bonuses, bonuses.length);
 	}
 
 	public static void main(String[] args) {

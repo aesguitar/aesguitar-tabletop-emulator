@@ -17,9 +17,9 @@ public class FileIO {
 			Files.createFile(file);
 			System.out.println(file + " has been created.");
 		}
-		else
-			throw new IOException(file + " already exists");
-
+		else{
+			//throw new IOException(file + " already exists");
+		}
 	}
 
 	//Deletes a file at the given Path
