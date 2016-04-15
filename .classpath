@@ -19,12 +19,8 @@
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.ui.workbench_3.107.1.v20160120-2131.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.ui.workbench.source_3.107.1.v20160120-2131.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/com.ibm.icu_54.1.1.v201501272100.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/com.ibm.icu.source_54.1.1.v201501272100.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.ui.forms_3.6.200.v20150506-2029.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.ui.forms.source_3.6.200.v20150506-2029.jar"/>
-	<classpathentry kind="lib" path="org.pushingpixels.trident_1.2.0.v20100204-1500.jar" sourcepath="org.pushingpixels.trident.source_1.2.0.v20100204-1500.jar"/>
-	<classpathentry kind="lib" path="org.eclipse.e4.xwt_0.9.1.SNAPSHOT.jar" sourcepath="org.eclipse.e4.xwt.source_0.9.1.SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="org.eclipse.e4.xwt.forms_0.9.1.SNAPSHOT.jar" sourcepath="org.eclipse.e4.xwt.forms.source_0.9.1.SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding_1.5.0.v20150422-0725.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.source_1.5.0.v20150422-0725.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.observable_1.5.0.v20150422-0725.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.observable.source_1.5.0.v20150422-0725.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.jface.databinding_1.7.0.v20150406-2148.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.jface.databinding.source_1.7.0.v20150406-2148.jar"/>
-	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
