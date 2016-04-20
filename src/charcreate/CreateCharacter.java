@@ -10,12 +10,12 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import util.Character;
-import util.ClassList;
+import main.Character;
+import main.ClassList;
+import main.IdConflictException;
+import main.Race;
+import main.RaceList;
 import util.Dice;
-import util.IdConflictException;
-import util.Race;
-import util.RaceList;
 import util.UF;
 
 /**

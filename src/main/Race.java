@@ -1,6 +1,8 @@
-package util;
+package main;
 
 import java.util.Arrays;
+
+import util.UF;
 
 public class Race {
 	
@@ -49,6 +51,11 @@ public class Race {
 	public void setBonuses(int [] bonuses)
 	{
 		bonus = Arrays.copyOf(bonuses, bonuses.length);
+	}
+	
+	public static Race defaultRace()
+	{
+		return new Race(-1, "", new int[] {0,0,0,0,0,0});
 	}
 
 	public static void main(String[] args) {

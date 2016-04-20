@@ -1,4 +1,4 @@
-package util;
+package main;
 
 public class Class {
 	private int id = -1;
@@ -32,6 +32,12 @@ public class Class {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public static Class defaultClass()
+	{
+		return new Class(-1, "");
+	}
+	
 	public void printClass() {
 		// TODO Auto-generated method stub
 		System.out.println("ID: " + id + "\nName: " + name);

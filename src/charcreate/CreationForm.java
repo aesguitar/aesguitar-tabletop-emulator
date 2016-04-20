@@ -9,11 +9,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import util.Class;
-import util.ClassList;
 import util.Dice;
-import util.Race;
-import util.RaceList;
 import util.UF;
 
 import java.awt.Font;
@@ -37,6 +33,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+import main.Class;
+import main.ClassList;
+import main.Race;
+import main.RaceList;
 
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
@@ -330,6 +330,8 @@ public class CreationForm extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						cancel = true;
+						finalRace = Race.defaultRace();
+						finalClass = Class.defaultClass();
 						dispose();
 					}
 				});

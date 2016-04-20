@@ -1,4 +1,4 @@
-package util;
+package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+
+import util.Timer;
 
 public class ClassList {
 	

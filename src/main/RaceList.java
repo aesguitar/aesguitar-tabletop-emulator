@@ -1,4 +1,4 @@
-package util;
+package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
+
+import util.Timer;
 
 public class RaceList{ //An ArrayList containing all available races in the game (from a file)
 

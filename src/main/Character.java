@@ -1,4 +1,4 @@
-package util;
+package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.Scanner;
+
+import util.FileIO;
+import util.UF;
 
 public class Character {
 	private int[] stats = new int[6];
@@ -52,7 +55,7 @@ public class Character {
 			while(in.hasNext())
 			{
 				String test = in.next();
-				System.out.println("test = " + test);
+				//System.out.println("test = " + test);
 				stats[i] = Integer.parseInt(test.trim());
 				i++;
 			}

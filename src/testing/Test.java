@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import javax.swing.WindowConstants;
 
 import charcreate.CreationForm;
-import util.Character;
-import util.ClassList;
-import util.IdConflictException;
-import util.RaceList;
+import main.Character;
+import main.ClassList;
+import main.IdConflictException;
+import main.RaceList;
 
 public class Test{
 	public static ArrayList<String> inputs = new ArrayList<String>();

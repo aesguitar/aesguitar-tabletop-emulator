@@ -11,7 +11,7 @@ public class UF {
 	public static final File raceLoc = new File("race-list.txt");
 	public static final File classLoc = new File("class-list.txt");
 	public static final Color lightCoral = new Color(240, 128, 128);
-	private static final Pattern  regExp = Pattern.compile("[\\x00-\\x20]*[+-]?(((((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)([eE][+-]?(\\p{Digit}+))?)|(\\.((\\p{Digit}+))([eE][+-]?(\\p{Digit}+))?)|(((0[xX](\\p{XDigit}+)(\\.)?)|(0[xX](\\p{XDigit}+)?(\\.)(\\p{XDigit}+)))[pP][+-]?(\\p{Digit}+)))[fFdD]?))[\\x00-\\x20]*");
+	private static final Pattern  doubleReg = Pattern.compile("[\\x00-\\x20]*[+-]?(((((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)([eE][+-]?(\\p{Digit}+))?)|(\\.((\\p{Digit}+))([eE][+-]?(\\p{Digit}+))?)|(((0[xX](\\p{XDigit}+)(\\.)?)|(0[xX](\\p{XDigit}+)?(\\.)(\\p{XDigit}+)))[pP][+-]?(\\p{Digit}+)))[fFdD]?))[\\x00-\\x20]*");
 	//Checks if a given string is an integer
 	public static boolean isInt(String str)
 	{
@@ -40,7 +40,7 @@ public class UF {
 	
 	public static boolean isFloat(String str)
 	{
-		return regExp.matcher(str).matches();
+		return doubleReg.matcher(str).matches();
 	}
 
 	//prints the contents of a List l
