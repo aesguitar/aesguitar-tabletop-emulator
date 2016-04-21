@@ -84,7 +84,7 @@ public class Character {
 							"\n" + stats[0] + "," + stats[1] + "," +
 							stats[2] + "," + stats[3] + "," +
 							stats[4] + "," + stats[5];
-		Path fileName = Paths.get(name.concat("-data.txt").replaceAll(" ", "_"));
+		Path fileName = Paths.get(name.concat("-data.char").replaceAll(" ", "_"));
 		
 		FileIO.createFile(fileName);
 		FileIO.writeToFile(fileName, to_write);

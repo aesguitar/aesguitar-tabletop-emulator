@@ -109,10 +109,10 @@ public class CreateCharacter {
 			cf.setVisible(true);
 			cf.setVisible(true);
 			confirm = JOptionPane.showConfirmDialog(null, "Are you sure?");
-		}while(confirm!=1);
+		}while(confirm!=JOptionPane.YES_OPTION);
 		Character ch = new Character(cf.finalStats, cf.finalName, cf.finalWeight,cf.finalHeight,cf.finalRace,cf.finalClass);
 		ch.writeCharacterToFile();
-		ch.printCharacter();
+		//ch.printCharacter();
 	}
 
 

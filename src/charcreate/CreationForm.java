@@ -49,6 +49,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Window.Type;
 
 public class CreationForm extends JDialog {
 
@@ -114,6 +115,7 @@ public class CreationForm extends JDialog {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public CreationForm(RaceList rl, ClassList cl) {
+		setType(Type.POPUP);
 		setTitle("Character Creation");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CreationForm.class.getResource("/icons/dnd icon1.png")));
 		this.rl = rl;

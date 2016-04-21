@@ -22,5 +22,7 @@
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding_1.5.0.v20150422-0725.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.source_1.5.0.v20150422-0725.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.observable_1.5.0.v20150422-0725.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.observable.source_1.5.0.v20150422-0725.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.jface.databinding_1.7.0.v20150406-2148.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.jface.databinding.source_1.7.0.v20150406-2148.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.beans_1.3.0.v20150422-0725.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.beans.source_1.3.0.v20150422-0725.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.property_1.5.0.v20150422-0725.jar" sourcepath="C:/Users/Alex/.p2/pool/plugins/org.eclipse.core.databinding.property.source_1.5.0.v20150422-0725.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
