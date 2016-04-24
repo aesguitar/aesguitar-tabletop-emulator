@@ -3,16 +3,52 @@ package util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Dice {
 	private static Random ran = new Random();
 
 	//Rolls n m-sided dice with a modifier and a rule for which dice to keep 
-	// rule is a number indicating whether to take the highest or lowest dice thrown
-	// for example, a rule of -3 indicates taking the lowest three dice for the sum
-	// A loud roll prints the dice values, kept values, and the sum
-	//Returns the sum of the dice + a modifier according to the rule
-	@SuppressWarnings("null")
+	public static int rollLoudSum(String rollCmd)
+	{
+		rollCmd = rollCmd.replaceAll(" ", "");
+		Pattern p = Pattern.compile("[0-9]+");
+		Matcher m = p.matcher(rollCmd);
+		rollCmd = rollCmd.trim();
+		int numDice = 0, numSides = 0, modifier = 0, rule = 0;
+		if(rollCmd.contains("d"))
+		{
+			if(m.find())
+				numDice = Integer.parseInt(m.group());
+			else 
+				return 0;
+
+			if(m.find())
+				numSides = Integer.parseInt(m.group());
+			else
+				return 0;
+
+			if(rollCmd.substring(m.end(), m.end()+1).equalsIgnoreCase("m")&&!m.hitEnd())
+			{
+				if(m.find())
+					modifier = Integer.parseInt(m.group());
+				else
+					System.out.println("m not found.");
+			}
+			if(rollCmd.substring(m.end(), m.end()+1).equalsIgnoreCase("r")&&!m.hitEnd())
+			{
+				if(m.find())
+					rule = Integer.parseInt(m.group());
+				else
+					return 0;
+			}	
+			//System.out.println(rule);
+			return rollLoudSum(numDice, numSides, modifier, rule);
+		}
+		else
+			return 0;
+	}
 	public static int rollLoudSum(int numDice, int numSides, int modifier, int rule)
 	{
 		int value = 0;
@@ -20,7 +56,7 @@ public class Dice {
 		ArrayList<Integer> filtered = new ArrayList<Integer>();
 		for(int i = 0; i < numDice; i++)
 		{
-			int r = ran.nextInt(numSides-1)+1;
+			int r = ran.nextInt(numSides)+1;
 			rolls.add(r);
 			filtered.add(r);
 		}
@@ -33,6 +69,7 @@ public class Dice {
 
 		if(Math.abs(rule)<numDice && rule != 0)
 		{
+			//System.out.println("Trimming rolls.");
 			if(rule < 0)
 				for(int i = 0; i < numDice + rule; i++)
 					filtered.remove(filtered.size()-1);
@@ -40,6 +77,7 @@ public class Dice {
 				for(int i = 0; i < numDice - rule; i++)
 					filtered.remove(0);
 		}
+		
 		System.out.print("Kept = ");
 		UF.printList(filtered);
 
@@ -52,6 +90,44 @@ public class Dice {
 		System.out.println(modifier + " = " + value + "\n");
 		return value;
 	}
+
+	//command of form #d# m# r#
+	//m is optional, d and r are not
+	public static int rollSum(String rollCmd)
+	{
+		rollCmd = rollCmd.replaceAll(" ", "");
+		Pattern p = Pattern.compile("[0-9]+");
+		Matcher m = p.matcher(rollCmd);
+		rollCmd = rollCmd.trim();
+		int numDice = 0, numSides = 0, modifier = 0, rule = 0;
+		if(rollCmd.contains("d"))
+		{
+			if(m.find())
+				numDice = Integer.parseInt(m.group());
+			else 
+				return 0;
+
+			if(m.find())
+				numSides = Integer.parseInt(m.group());
+			else
+				return 0;
+
+			if(rollCmd.substring(m.end(), m.end()+1).equalsIgnoreCase("m")&&!m.hitEnd())
+			{
+				if(m.find())
+					modifier = Integer.parseInt(m.group());
+			}
+			if(rollCmd.substring(m.end(), m.end()+1).equalsIgnoreCase("r")&&!m.hitEnd())
+			{
+				if(m.find())
+					rule = Integer.parseInt(m.group());
+			}	
+			System.out.println(rule);
+			return rollSum(numDice, numSides, modifier, rule);
+		}
+		else
+			return 0;
+	}
 	public static int rollSum(int numDice, int numSides, int modifier, int rule)
 	{
 		int value = 0;
@@ -59,7 +135,7 @@ public class Dice {
 		ArrayList<Integer> filtered = new ArrayList<Integer>();
 		for(int i = 0; i < numDice; i++)
 		{
-			int r = ran.nextInt(numSides-1)+1;
+			int r = ran.nextInt(numSides)+1;
 			rolls.add(r);
 			filtered.add(r);
 		}
@@ -95,10 +171,7 @@ public class Dice {
 
 
 	public static void main(String[] args) {
-		rollLoudSum(4,6,1,-3);
-		rollLoudSum(4,6,1,3);
-		rollLoudSum(8,20,1,-3);
-		rollLoudSum(8,20,1,3);
+		System.out.println(rollLoudSum("14d6 m0 r3"));
 
 	}
 

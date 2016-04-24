@@ -3,10 +3,13 @@ package main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 import util.FileIO;
 import util.UF;
@@ -18,6 +21,9 @@ public class Character {
 	private Race race = null;
 	private float weight = 0;
 	private float height = 0;
+	int level = 0;
+	float experience = 0;
+	int hitpoints = 0;
 	
 	public Character(int[] stats, String name, float weight, float height, Race race, Class cl)
 	{
@@ -27,6 +33,8 @@ public class Character {
 		this.setHeight(height);
 		this.setRace(race);
 		this.setCl(cl);
+		level = 1;
+		
 	}
 	
 	public Character(File data)
@@ -86,8 +94,26 @@ public class Character {
 							stats[4] + "," + stats[5];
 		Path fileName = Paths.get(name.concat("-data.char").replaceAll(" ", "_"));
 		
-		FileIO.createFile(fileName);
-		FileIO.writeToFile(fileName, to_write);
+		if(Files.exists(fileName))
+		{
+			int conf = JOptionPane.showConfirmDialog(null, "File already exists. Overwrite?");
+			if(conf == JOptionPane.OK_OPTION)
+			{
+				FileIO.deleteFile(fileName);
+				FileIO.createFile(fileName);
+				FileIO.writeToFile(fileName, to_write);
+			}
+			else
+				JOptionPane.showMessageDialog(null, "No file operation completed.");
+		}
+		else
+		{
+			FileIO.createFile(fileName);
+			FileIO.writeToFile(fileName, to_write);
+		}
+		
+		
+		
 	}
 	
 	public void printCharacter()

@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -26,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -35,6 +37,7 @@ import javax.swing.text.NumberFormatter;
 
 import main.Class;
 import main.ClassList;
+import main.IdConflictException;
 import main.Race;
 import main.RaceList;
 
@@ -50,6 +53,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Window.Type;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class CreationForm extends JDialog {
 
@@ -72,15 +77,15 @@ public class CreationForm extends JDialog {
 	private int[] charStats = new int[6];
 	private JLabel lblError;
 	private boolean halfelf = false;
-	
+
 	private boolean done = false;
 	private boolean nameDone = false;
 	private boolean weightDone = false;
 	private boolean weightFormat = false;
 	private boolean heightDone = false;
 	private boolean heightFormat = false;
-	
-	
+
+
 	public int[] finalStats = new int[6];
 	public String finalName = "";
 	public float finalWeight = -1;
@@ -88,26 +93,46 @@ public class CreationForm extends JDialog {
 	public Race finalRace = null;
 	public Class finalClass = null;
 	public boolean cancel = false;
-	
+	public boolean rolled = false;
+
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try {
-			RaceList rlist = new RaceList(new File("race-list.txt"));
-			ClassList clist = new ClassList(new File("class-list.txt"));
-			rlist.buildList();
-			clist.buildList();
-			//System.out.println(clist.get(1).getName());
-			CreationForm dialog = new CreationForm(rlist,clist);
-			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		System.exit(0);
+
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				RaceList rlist = new RaceList(new File("race-list.txt"));
+				ClassList clist = new ClassList(new File("class-list.txt"));
+				try {
+					rlist.buildList();
+				} catch (IdConflictException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					clist.buildList();
+				} catch (IdConflictException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				CreationForm dialog = new CreationForm(rlist,clist);
+				dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+				System.exit(0);
+			}
+		});
+
+
 	}
 
 	/**
@@ -127,26 +152,25 @@ public class CreationForm extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		SpringLayout sl_contentPanel = new SpringLayout();
 		contentPanel.setLayout(sl_contentPanel);
-		
+
 		lblError = new JLabel("");
 		sl_contentPanel.putConstraint(SpringLayout.SOUTH, lblError, -10, SpringLayout.SOUTH, contentPanel);
 		lblError.setForeground(Color.RED);
 		lblError.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblError);
-		
+
 		JLabel lblName = new JLabel("Name:");
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblName, 10, SpringLayout.NORTH, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblName, 10, SpringLayout.WEST, contentPanel);
 		contentPanel.add(lblName);
-		
+
 		nameField = new JTextField();
-		nameField.addKeyListener(new KeyAdapter() {
+		nameField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent arg0) {
+			public void focusLost(FocusEvent e) {
 				nameDone = !(nameField.getText().trim().equalsIgnoreCase(""));
 				isDone();
-				//checkError();
 			}
 		});
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, nameField, -3, SpringLayout.NORTH, lblName);
@@ -156,30 +180,30 @@ public class CreationForm extends JDialog {
 		contentPanel.add(nameField);
 		nameField.setColumns(10);
 		nameField.setPreferredSize(new Dimension(300,30));
-		
+
 		bonusTable = new JTable();
 		bonusTable.setRowSelectionAllowed(false);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, bonusTable, 539, SpringLayout.WEST, contentPanel);
 		bonusTable.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		bonusTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column"
-			}
-		) {
+				new Object[][] {
+					{null, null, null},
+					{null, null, null},
+					{null, null, null},
+					{null, null, null},
+					{null, null, null},
+					{null, null, null},
+				},
+				new String[] {
+						"New column", "New column", "New column"
+				}
+				) {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = -4777683669536303407L;
 			boolean[] columnEditables = new boolean[] {
-				false, false, false
+					false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -195,12 +219,12 @@ public class CreationForm extends JDialog {
 		bonusTable.setRowHeight(30);
 		contentPanel.add(bonusTable);
 		setStatsNameColumn(bonusTable);
-		
+
 		JLabel lblRace = new JLabel("Race:");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblRace, 0, SpringLayout.NORTH, lblName);
 		lblRace.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblRace);
-		
+
 		raceBox = new JComboBox(raceListToVector());
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblRace, -6, SpringLayout.WEST, raceBox);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, bonusTable, 16, SpringLayout.SOUTH, raceBox);
@@ -225,12 +249,12 @@ public class CreationForm extends JDialog {
 		});
 		raceBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(raceBox);
-		
-		JLabel lblStats = new JLabel("Stats:");
+
+		JLabel lblStats = new JLabel("Ability Scores:");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblStats, 0, SpringLayout.NORTH, bonusTable);
 		lblStats.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblStats);
-		
+
 		statsTable = new JTable();
 		statsTable.setRowSelectionAllowed(false);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblStats, -6, SpringLayout.WEST, statsTable);
@@ -238,24 +262,24 @@ public class CreationForm extends JDialog {
 		statsTable.setBorder(new LineBorder(SystemColor.activeCaptionBorder));
 		statsTable.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		statsTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-			},
-			new String[] {
-				"New column", "New column"
-			}
-		) {
+				new Object[][] {
+					{null, null},
+					{null, null},
+					{null, null},
+					{null, null},
+					{null, null},
+					{null, null},
+				},
+				new String[] {
+						"New column", "New column"
+				}
+				) {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1114808588180367001L;
 			boolean[] columnEditables = new boolean[] {
-				false, false
+					false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -267,7 +291,7 @@ public class CreationForm extends JDialog {
 		statsTable.getColumnModel().getColumn(1).setMaxWidth(35);
 		statsTable.setRowHeight(30);
 		contentPanel.add(statsTable);
-		
+
 		JButton btnRoll = new JButton("Roll Stats");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, btnRoll, 6, SpringLayout.SOUTH, statsTable);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, btnRoll, 0, SpringLayout.WEST, statsTable);
@@ -275,17 +299,18 @@ public class CreationForm extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				rollStats();
+				isDone();
 				setBonuses(rl.get(raceBox.getSelectedIndex()+1));
 			}
 		});
 		btnRoll.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(btnRoll);
-		
+
 		JLabel lblClass = new JLabel("Class:");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblClass, 0, SpringLayout.NORTH, lblName);
 		lblClass.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblClass);
-		
+
 		classBox = new JComboBox(classListToVector());
 		sl_contentPanel.putConstraint(SpringLayout.EAST, statsTable, 0, SpringLayout.EAST, classBox);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblClass, -6, SpringLayout.WEST, classBox);
@@ -294,7 +319,7 @@ public class CreationForm extends JDialog {
 		sl_contentPanel.putConstraint(SpringLayout.EAST, classBox, -459, SpringLayout.EAST, contentPanel);
 		classBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(classBox);
-		
+
 		JLabel lblBonuses = new JLabel("Bonuses:");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblBonuses, 25, SpringLayout.SOUTH, lblRace);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblBonuses, -6, SpringLayout.WEST, bonusTable);
@@ -344,51 +369,63 @@ public class CreationForm extends JDialog {
 		}
 		setStatsNameColumn(statsTable);
 		setInitialStats(statsTable);
-		
+
 		JLabel lblHeight = new JLabel("Height:");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblHeight, 4, SpringLayout.NORTH, bonusTable);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblHeight, 0, SpringLayout.EAST, lblName);
 		lblHeight.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblHeight);
-		
-		
+
+
 		DecimalFormat df = new DecimalFormat();
 		NumberFormatter ndff = new NumberFormatter(df);
 		DefaultFormatterFactory fac = new DefaultFormatterFactory(ndff);
 		heightField = new JFormattedTextField(fac);
-		heightField.addKeyListener(new KeyAdapter() {
+		sl_contentPanel.putConstraint(SpringLayout.EAST, heightField, -62, SpringLayout.WEST, lblStats);
+		heightField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void focusLost(FocusEvent arg0) {
+				//System.out.println("Height field focus lost.");
 				heightDone = !heightField.getText().trim().equalsIgnoreCase("");
+
+				if(UF.isInt(heightField.getText().trim()))
+					heightField.setText(heightField.getText().trim().concat(".00"));
+
+				//System.out.println(heightField.getText());
 				heightFormat = UF.isFloat(heightField.getText().trim());
 				isDone();
-				//checkError();
+				refresh();
 			}
+
 		});
-		
+
 		heightField.setMinimumSize(new Dimension(6, 30));
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, heightField, 1, SpringLayout.NORTH, bonusTable);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, heightField, 6, SpringLayout.EAST, lblHeight);
-		sl_contentPanel.putConstraint(SpringLayout.EAST, heightField, -124, SpringLayout.WEST, lblStats);
 		heightField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(heightField);
 		heightField.setColumns(10);
-		
+
 		JLabel lblWeight = new JLabel("Weight:");
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblError, 0, SpringLayout.WEST, lblWeight);
 		lblWeight.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblWeight, 19, SpringLayout.SOUTH, lblHeight);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblWeight, 0, SpringLayout.EAST, lblName);
 		contentPanel.add(lblWeight);
-		
+
 		weightField = new JFormattedTextField(fac);
-		weightField.addKeyListener(new KeyAdapter() {
+		weightField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void focusLost(FocusEvent arg0) {
 				weightDone = !weightField.getText().trim().equalsIgnoreCase("");
+
+				if(UF.isInt(weightField.getText().trim()))
+					weightField.setText(weightField.getText().concat(".00"));
+
 				weightFormat = UF.isFloat(weightField.getText().trim());
 				isDone();
 				//checkError();
+				refresh();
 			}
 		});
 		weightField.setMinimumSize(new Dimension(6, 30));
@@ -398,7 +435,7 @@ public class CreationForm extends JDialog {
 		weightField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(weightField);
 		weightField.setColumns(10);
-		
+
 		//System.out.println(raceBox.getSelectedIndex());
 		//rl.get(raceBox.getSelectedIndex()).printRace();
 		setBonuses(rl.get(raceBox.getSelectedIndex()+1));
@@ -407,11 +444,11 @@ public class CreationForm extends JDialog {
 	private boolean isDone()
 	{
 		if(!done)
-			done = nameDone && weightDone && weightFormat && heightDone && heightFormat;
-		
+			done = nameDone && weightDone && weightFormat && heightDone && heightFormat && rolled;
+
 		return done;
 	}
-	
+
 	private void checkError() {
 		// TODO Auto-generated method stub
 		String errorMessage = "";
@@ -429,15 +466,15 @@ public class CreationForm extends JDialog {
 				nameField.setBackground(UF.lightCoral);
 			else
 				nameField.setBackground(Color.white);
-			
+
 			if(!weightDone)
 				weightField.setBackground(UF.lightCoral);
-			
+
 			if(!heightDone)
 				heightField.setBackground(UF.lightCoral);
-				
+
 		}
-		
+
 		if(!weightFormat)
 		{
 			errorMessage = errorMessage.concat("Weight must be a decimal. ");
@@ -447,7 +484,7 @@ public class CreationForm extends JDialog {
 		{
 			weightField.setBackground(Color.white);
 		}
-		
+
 		if(!heightFormat)
 		{
 			errorMessage = errorMessage.concat("Height must be a decimal. ");
@@ -457,9 +494,19 @@ public class CreationForm extends JDialog {
 		{
 			heightField.setBackground(Color.white);
 		}
-		
+
+		if(!rolled)
+		{
+			errorMessage = errorMessage.concat("Roll your stats.");
+			statsTable.setBorder(new LineBorder(Color.red));
+		}
+		else
+		{
+			statsTable.setBorder(new LineBorder(SystemColor.activeCaptionBorder));
+		}
+
 		lblError.setText(errorMessage);
-		
+
 	}
 
 	private Vector<String> raceListToVector()
@@ -468,7 +515,7 @@ public class CreationForm extends JDialog {
 		Iterator<Race> i = rl.getRaceList().iterator();
 		while(i.hasNext())
 			v.addElement(i.next().getName());
-		
+
 		return v;
 	}
 	private Vector<String> classListToVector()
@@ -480,7 +527,7 @@ public class CreationForm extends JDialog {
 		}
 		return v;
 	}
-	
+
 	private void setStatsNameColumn(JTable table)
 	{
 		for(int i = 0; i < 6; i++)
@@ -488,7 +535,7 @@ public class CreationForm extends JDialog {
 			table.getModel().setValueAt(UF.statsList[i], i, 0);
 		}
 	}
-	
+
 	private void setInitialStats(JTable table)
 	{
 		for(int i = 0; i < 6; i++)
@@ -496,7 +543,7 @@ public class CreationForm extends JDialog {
 			table.getModel().setValueAt(0, i, 1);
 		}
 	}
-	
+
 	private void rollStats()
 	{
 		SelectStats ss = new SelectStats();
@@ -506,6 +553,7 @@ public class CreationForm extends JDialog {
 		{
 			statsTable.getModel().setValueAt(charStats[i], i, 1);
 		}
+		rolled = true;
 	}
 	private void setBonuses(Race r)
 	{
@@ -517,7 +565,7 @@ public class CreationForm extends JDialog {
 			bonusTable.getModel().setValueAt(Integer.toString(bonuses[i]+charStats[i]), i, 2);
 		}
 	}
-	
+
 	private void setData()
 	{
 		finalName = nameField.getText().trim();
@@ -529,5 +577,11 @@ public class CreationForm extends JDialog {
 		{
 			finalStats[i] = Integer.parseInt(bonusTable.getModel().getValueAt(i, 2).toString());
 		}
+	}
+	
+	private void refresh()
+	{
+		setVisible(false);
+		setVisible(true);
 	}
 }
