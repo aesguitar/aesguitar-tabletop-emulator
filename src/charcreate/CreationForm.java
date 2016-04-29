@@ -66,7 +66,7 @@ public class CreationForm extends JDialog {
 	private JTextField nameField;
 	private RaceList rl;
 	private ClassList cl;
-	private JTable statsTable;
+	private JTable tblScores;
 	private JTable bonusTable;
 	private JTextField heightField;
 	private JTextField weightField;
@@ -94,6 +94,9 @@ public class CreationForm extends JDialog {
 	public Class finalClass = null;
 	public boolean cancel = false;
 	public boolean rolled = false;
+	private JTable tblStats;
+	
+	private int constitution = 0;
 
 
 	/**
@@ -145,7 +148,7 @@ public class CreationForm extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CreationForm.class.getResource("/icons/dnd icon1.png")));
 		this.rl = rl;
 		this.cl = cl;
-		setBounds(100, 100, 922, 618);
+		setBounds(100, 100, 752, 572);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(240, 248, 255));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -154,6 +157,7 @@ public class CreationForm extends JDialog {
 		contentPanel.setLayout(sl_contentPanel);
 
 		lblError = new JLabel("");
+		sl_contentPanel.putConstraint(SpringLayout.WEST, lblError, 2, SpringLayout.WEST, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.SOUTH, lblError, -10, SpringLayout.SOUTH, contentPanel);
 		lblError.setForeground(Color.RED);
 		lblError.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -226,11 +230,12 @@ public class CreationForm extends JDialog {
 		contentPanel.add(lblRace);
 
 		raceBox = new JComboBox(raceListToVector());
+		sl_contentPanel.putConstraint(SpringLayout.WEST, lblRace, -53, SpringLayout.WEST, raceBox);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblRace, -6, SpringLayout.WEST, raceBox);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, bonusTable, 16, SpringLayout.SOUTH, raceBox);
+		sl_contentPanel.putConstraint(SpringLayout.EAST, raceBox, 153, SpringLayout.WEST, bonusTable);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, raceBox, 2, SpringLayout.NORTH, nameField);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, raceBox, 0, SpringLayout.WEST, bonusTable);
-		sl_contentPanel.putConstraint(SpringLayout.EAST, raceBox, -204, SpringLayout.EAST, contentPanel);
 		raceBox.setSelectedIndex(0);
 		raceBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
@@ -245,23 +250,26 @@ public class CreationForm extends JDialog {
 				}
 				else
 					halfelf = false;
+				updateHP();
 			}
 		});
 		raceBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(raceBox);
 
-		JLabel lblStats = new JLabel("Ability Scores:");
-		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblStats, 0, SpringLayout.NORTH, bonusTable);
-		lblStats.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		contentPanel.add(lblStats);
+		JLabel lblScores = new JLabel("Ability Scores:");
+		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblScores, 4, SpringLayout.NORTH, bonusTable);
+		//sl_contentPanel.putConstraint(SpringLayout.EAST, lblStats, -595, SpringLayout.EAST, contentPanel);
+		lblScores.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		contentPanel.add(lblScores);
 
-		statsTable = new JTable();
-		statsTable.setRowSelectionAllowed(false);
-		sl_contentPanel.putConstraint(SpringLayout.EAST, lblStats, -6, SpringLayout.WEST, statsTable);
-		sl_contentPanel.putConstraint(SpringLayout.NORTH, statsTable, 0, SpringLayout.NORTH, bonusTable);
-		statsTable.setBorder(new LineBorder(SystemColor.activeCaptionBorder));
-		statsTable.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		statsTable.setModel(new DefaultTableModel(
+		tblScores = new JTable();
+		sl_contentPanel.putConstraint(SpringLayout.NORTH, tblScores, 0, SpringLayout.NORTH, bonusTable);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, tblScores, 6, SpringLayout.EAST, lblScores);
+		//sl_contentPanel.putConstraint(SpringLayout.EAST, statsTable, 136, SpringLayout.EAST, lblStats);
+		tblScores.setRowSelectionAllowed(false);
+		tblScores.setBorder(new LineBorder(SystemColor.activeCaptionBorder));
+		tblScores.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tblScores.setModel(new DefaultTableModel(
 				new Object[][] {
 					{null, null},
 					{null, null},
@@ -285,43 +293,53 @@ public class CreationForm extends JDialog {
 				return columnEditables[column];
 			}
 		});
-		statsTable.getColumnModel().getColumn(0).setPreferredWidth(95);
-		statsTable.getColumnModel().getColumn(0).setMinWidth(95);
-		statsTable.getColumnModel().getColumn(1).setPreferredWidth(35);
-		statsTable.getColumnModel().getColumn(1).setMaxWidth(35);
-		statsTable.setRowHeight(30);
-		contentPanel.add(statsTable);
+		tblScores.getColumnModel().getColumn(0).setPreferredWidth(95);
+		tblScores.getColumnModel().getColumn(0).setMinWidth(95);
+		tblScores.getColumnModel().getColumn(1).setPreferredWidth(35);
+		tblScores.getColumnModel().getColumn(1).setMaxWidth(35);
+		tblScores.setRowHeight(30);
+		contentPanel.add(tblScores);
 
 		JButton btnRoll = new JButton("Roll Stats");
-		sl_contentPanel.putConstraint(SpringLayout.NORTH, btnRoll, 6, SpringLayout.SOUTH, statsTable);
-		sl_contentPanel.putConstraint(SpringLayout.WEST, btnRoll, 0, SpringLayout.WEST, statsTable);
+		sl_contentPanel.putConstraint(SpringLayout.NORTH, btnRoll, 6, SpringLayout.SOUTH, tblScores);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, btnRoll, 307, SpringLayout.WEST, contentPanel);
 		btnRoll.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				rollStats();
 				isDone();
 				setBonuses(rl.get(raceBox.getSelectedIndex()+1));
+				updateHP();
 			}
 		});
 		btnRoll.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(btnRoll);
 
 		JLabel lblClass = new JLabel("Class:");
+		sl_contentPanel.putConstraint(SpringLayout.EAST, lblScores, 0, SpringLayout.EAST, lblClass);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblClass, 0, SpringLayout.NORTH, lblName);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, lblClass, 36, SpringLayout.EAST, nameField);
+		sl_contentPanel.putConstraint(SpringLayout.EAST, lblClass, 78, SpringLayout.EAST, nameField);
 		lblClass.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblClass);
 
 		classBox = new JComboBox(classListToVector());
-		sl_contentPanel.putConstraint(SpringLayout.EAST, statsTable, 0, SpringLayout.EAST, classBox);
-		sl_contentPanel.putConstraint(SpringLayout.EAST, lblClass, -6, SpringLayout.WEST, classBox);
-		sl_contentPanel.putConstraint(SpringLayout.WEST, classBox, 307, SpringLayout.WEST, contentPanel);
+		classBox.setSelectedIndex(0);
+		classBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				tblStats.getModel().setValueAt(cl.get(classBox.getSelectedIndex()+1).getDie().toString(), 1, 2);
+				updateHP();
+			}
+		});
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, classBox, 2, SpringLayout.NORTH, nameField);
-		sl_contentPanel.putConstraint(SpringLayout.EAST, classBox, -459, SpringLayout.EAST, contentPanel);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, classBox, 6, SpringLayout.EAST, lblClass);
+		sl_contentPanel.putConstraint(SpringLayout.EAST, classBox, 0, SpringLayout.EAST, tblScores);
 		classBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(classBox);
 
 		JLabel lblBonuses = new JLabel("Bonuses:");
-		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblBonuses, 25, SpringLayout.SOUTH, lblRace);
+		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblBonuses, 4, SpringLayout.NORTH, bonusTable);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, lblBonuses, 108, SpringLayout.EAST, tblScores);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblBonuses, -6, SpringLayout.WEST, bonusTable);
 		lblBonuses.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblBonuses);
@@ -367,12 +385,13 @@ public class CreationForm extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		setStatsNameColumn(statsTable);
-		setInitialStats(statsTable);
+		setStatsNameColumn(tblScores);
+		setInitialStats(tblScores);
 
 		JLabel lblHeight = new JLabel("Height:");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblHeight, 4, SpringLayout.NORTH, bonusTable);
-		sl_contentPanel.putConstraint(SpringLayout.EAST, lblHeight, 0, SpringLayout.EAST, lblName);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, lblHeight, 5, SpringLayout.WEST, contentPanel);
+		//sl_contentPanel.putConstraint(SpringLayout.EAST, lblHeight, 57, SpringLayout.WEST, contentPanel);
 		lblHeight.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblHeight);
 
@@ -381,7 +400,9 @@ public class CreationForm extends JDialog {
 		NumberFormatter ndff = new NumberFormatter(df);
 		DefaultFormatterFactory fac = new DefaultFormatterFactory(ndff);
 		heightField = new JFormattedTextField(fac);
-		sl_contentPanel.putConstraint(SpringLayout.EAST, heightField, -62, SpringLayout.WEST, lblStats);
+		sl_contentPanel.putConstraint(SpringLayout.EAST, heightField, 80, SpringLayout.EAST, lblHeight);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, heightField, 6, SpringLayout.EAST, lblHeight);
+		//sl_contentPanel.putConstraint(SpringLayout.EAST, heightField, -759, SpringLayout.EAST, contentPanel);
 		heightField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -394,26 +415,28 @@ public class CreationForm extends JDialog {
 				//System.out.println(heightField.getText());
 				heightFormat = UF.isFloat(heightField.getText().trim());
 				isDone();
-				refresh();
+				repaint();
 			}
 
 		});
 
 		heightField.setMinimumSize(new Dimension(6, 30));
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, heightField, 1, SpringLayout.NORTH, bonusTable);
-		sl_contentPanel.putConstraint(SpringLayout.WEST, heightField, 6, SpringLayout.EAST, lblHeight);
 		heightField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(heightField);
 		heightField.setColumns(10);
 
 		JLabel lblWeight = new JLabel("Weight:");
-		sl_contentPanel.putConstraint(SpringLayout.WEST, lblError, 0, SpringLayout.WEST, lblWeight);
-		lblWeight.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblWeight, 19, SpringLayout.SOUTH, lblHeight);
-		sl_contentPanel.putConstraint(SpringLayout.EAST, lblWeight, 0, SpringLayout.EAST, lblName);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, lblWeight, 2, SpringLayout.WEST, contentPanel);
+		//sl_contentPanel.putConstraint(SpringLayout.EAST, lblWeight, 57, SpringLayout.WEST, contentPanel);
+		lblWeight.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblWeight);
 
 		weightField = new JFormattedTextField(fac);
+		sl_contentPanel.putConstraint(SpringLayout.NORTH, weightField, 8, SpringLayout.SOUTH, heightField);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, weightField, 6, SpringLayout.EAST, lblWeight);
+		sl_contentPanel.putConstraint(SpringLayout.EAST, weightField, 80, SpringLayout.EAST, lblWeight);
 		weightField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -429,18 +452,56 @@ public class CreationForm extends JDialog {
 			}
 		});
 		weightField.setMinimumSize(new Dimension(6, 30));
-		sl_contentPanel.putConstraint(SpringLayout.NORTH, weightField, -3, SpringLayout.NORTH, lblWeight);
-		sl_contentPanel.putConstraint(SpringLayout.WEST, weightField, 0, SpringLayout.WEST, nameField);
-		sl_contentPanel.putConstraint(SpringLayout.EAST, weightField, 80, SpringLayout.EAST, lblWeight);
 		weightField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(weightField);
 		weightField.setColumns(10);
+		
+		JLabel lblStats = new JLabel("Stats:");
+		sl_contentPanel.putConstraint(SpringLayout.EAST, lblStats, 0, SpringLayout.EAST, lblName);
+		lblStats.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		contentPanel.add(lblStats);
+		
+		tblStats = new JTable();
+		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblStats, 4, SpringLayout.NORTH, tblStats);
+		sl_contentPanel.putConstraint(SpringLayout.NORTH, tblStats, 161, SpringLayout.SOUTH, weightField);
+		sl_contentPanel.putConstraint(SpringLayout.WEST, tblStats, 0, SpringLayout.WEST, nameField);
+		tblStats.setBorder(new LineBorder(SystemColor.activeCaptionBorder));
+		tblStats.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tblStats.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Level", "Hitpoints", "Hit Dice"},
+				{null, null, null},
+			},
+			new String[] {
+				"Level", "Hitpoints", "Hit Dice"
+			}
+		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8474853470627396222L;
+			boolean[] columnEditables = new boolean[] {
+				false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblStats.setRowHeight(30);
+		contentPanel.add(tblStats);
 
 		//System.out.println(raceBox.getSelectedIndex());
 		//rl.get(raceBox.getSelectedIndex()).printRace();
 		setBonuses(rl.get(raceBox.getSelectedIndex()+1));
+		setInitStats(cl.get(classBox.getSelectedIndex()+1));
 		setModal(true);
 	}
+	private void setInitStats(Class class1) {
+		tblStats.getModel().setValueAt(1, 1, 0);
+		tblStats.getModel().setValueAt(class1.getDie().getNumSides(), 1, 1);
+		tblStats.getModel().setValueAt(class1.getDie().toString(), 1, 2);
+	}
+
 	private boolean isDone()
 	{
 		if(!done)
@@ -498,11 +559,11 @@ public class CreationForm extends JDialog {
 		if(!rolled)
 		{
 			errorMessage = errorMessage.concat("Roll your stats.");
-			statsTable.setBorder(new LineBorder(Color.red));
+			tblScores.setBorder(new LineBorder(Color.red));
 		}
 		else
 		{
-			statsTable.setBorder(new LineBorder(SystemColor.activeCaptionBorder));
+			tblScores.setBorder(new LineBorder(SystemColor.activeCaptionBorder));
 		}
 
 		lblError.setText(errorMessage);
@@ -551,7 +612,7 @@ public class CreationForm extends JDialog {
 		charStats = ss.getStats();
 		for(int i = 0; i < 6; i++)
 		{
-			statsTable.getModel().setValueAt(charStats[i], i, 1);
+			tblScores.getModel().setValueAt(charStats[i], i, 1);
 		}
 		rolled = true;
 	}
@@ -583,5 +644,11 @@ public class CreationForm extends JDialog {
 	{
 		setVisible(false);
 		setVisible(true);
+	}
+	
+	private void updateHP()
+	{
+		constitution = Integer.parseInt(bonusTable.getModel().getValueAt(2, 2).toString());
+		tblStats.getModel().setValueAt(cl.get(classBox.getSelectedIndex()+1).getDie().getNumSides() + (int)Math.floor((constitution-10)/2.0), 1, 1);
 	}
 }

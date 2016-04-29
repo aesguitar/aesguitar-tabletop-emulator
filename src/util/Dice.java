@@ -9,6 +9,57 @@ import java.util.regex.Pattern;
 public class Dice {
 	private static Random ran = new Random();
 
+	private int numDice, numSides, modifier, rule;
+
+	public Dice(int numDice, int numSides, int modifier, int rule)
+	{
+		this.numDice = numDice;
+		this.numSides = numSides;
+		this.modifier = modifier;
+		this.rule = rule;
+	}
+
+	public Dice(String diceDesc)
+	{
+		diceDesc = diceDesc.replaceAll(" ", "");
+		Pattern p = Pattern.compile("[0-9]+");
+		Matcher m = p.matcher(diceDesc);
+		diceDesc = diceDesc.trim();
+		//int numDice = 0, numSides = 0, modifier = 0, rule = 0;
+		if(diceDesc.contains("d"))
+		{
+			if(m.find())
+				numDice = Integer.parseInt(m.group());
+			else 
+				numDice = 0;
+
+			if(m.find())
+				numSides = Integer.parseInt(m.group());
+			else
+				numSides = 0;
+
+			if(diceDesc.substring(m.end(), m.end()+1).equalsIgnoreCase("m")&&!m.hitEnd())
+			{
+				if(m.find())
+					modifier = Integer.parseInt(m.group());
+				else
+					modifier = 0;
+			}
+			if(diceDesc.substring(m.end(), m.end()+1).equalsIgnoreCase("r")&&!m.hitEnd())
+			{
+				if(m.find())
+					rule = Integer.parseInt(m.group());
+				else
+					rule = 0;
+			}
+		}
+	}
+
+	public String toString()
+	{
+		return numDice + "d" + numSides + ((modifier > 0)?("m" + modifier):("")) + ((rule > 0)?("r" + rule):(""));
+	}
+
 	//Rolls n m-sided dice with a modifier and a rule for which dice to keep 
 	public static int rollLoudSum(String rollCmd)
 	{
@@ -77,7 +128,7 @@ public class Dice {
 				for(int i = 0; i < numDice - rule; i++)
 					filtered.remove(0);
 		}
-		
+
 		System.out.print("Kept = ");
 		UF.printList(filtered);
 
@@ -168,7 +219,25 @@ public class Dice {
 		return value;
 	}
 
+	public int getNumDice()
+	{
+		return numDice;
+	}
 
+	public int getNumSides()
+	{
+		return numSides;
+	}
+	
+	public int getModifier()
+	{
+		return modifier;
+	}
+	
+	public int getRule()
+	{
+		return rule;
+	}
 
 	public static void main(String[] args) {
 		System.out.println(rollLoudSum("14d6 m0 r3"));

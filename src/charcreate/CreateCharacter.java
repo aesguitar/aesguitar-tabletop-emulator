@@ -108,7 +108,7 @@ public class CreateCharacter {
 		do{
 			cf.setVisible(true);
 			cf.setVisible(true);
-			confirm = JOptionPane.showConfirmDialog(null, "Are you sure?");
+			//confirm = JOptionPane.showConfirmDialog(null, "Are you sure?");
 		}while(confirm!=JOptionPane.YES_OPTION);
 		Character ch = new Character(cf.finalStats, cf.finalName, cf.finalWeight,cf.finalHeight,cf.finalRace,cf.finalClass);
 		ch.writeCharacterToFile();

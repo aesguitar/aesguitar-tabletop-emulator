@@ -34,6 +34,8 @@ public class Character {
 		this.setRace(race);
 		this.setCl(cl);
 		level = 1;
+		hitpoints = cl.getDie().getNumSides() + (int)Math.floorDiv(stats[2]-10, 2);
+		System.out.println(hitpoints);
 		
 	}
 	
@@ -56,6 +58,7 @@ public class Character {
 			name = in.nextLine().trim();
 			weight = in.nextFloat();
 			height = in.nextFloat();
+			hitpoints = in.nextInt();
 			race = rli.get(in.nextInt());
 			cl = cli.get(in.nextInt());
 			int i = 0;
@@ -79,6 +82,7 @@ public class Character {
 	 *Name
 	 *Weight
 	 *Height
+	 *Hitpoints
 	 *Race ID
 	 *Class ID
 	 *Stats (comma separated) 
@@ -88,6 +92,7 @@ public class Character {
 	{
 		String to_write = name + "\n" + Float.toString(weight) + 
 							"\n" + Float.toString(height) + "\n"
+							+ hitpoints + "\n" +
 							+ race.getID() + "\n" + cl.getId() +
 							"\n" + stats[0] + "," + stats[1] + "," +
 							stats[2] + "," + stats[3] + "," +

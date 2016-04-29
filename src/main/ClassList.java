@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import util.Dice;
 import util.Timer;
 
 public class ClassList {
@@ -28,6 +29,7 @@ public class ClassList {
 		int lineNumber = 1;
 		int[] b = new int[6];
 		int id = 0;
+		Dice d = null;
 		String rname = "";
 
 		try {
@@ -75,6 +77,11 @@ public class ClassList {
 								throw new IdConflictException("Class ID conflict: " + id + "; " + rname + " and " + get(id).getName() + ". Line number " + (lineNumber-2));
 							//System.out.printf("name = %s\n", rname);
 						}
+						else if(tmp.startsWith("hitdice"))
+						{
+							tmp.replaceFirst("hitdice", "").trim().replace("=", "").trim().replaceAll("\"", "");
+							d = new Dice(tmp);
+						}
 						else
 							throw new ParseException("Unknown Parameter: " + line.replaceAll("r:", ""), lineNumber);
 						if(in.hasNextLine())
@@ -82,7 +89,7 @@ public class ClassList {
 					}
 					/*if(!isIdUnique(id))
 						throw new IdConflictException("Class ID conflict: " + id + "; " + rname + " and " + get(id).getName() + ". Line number " + (lineNumber-5));*/
-					classlist.add(new Class(id, rname));
+					classlist.add(new Class(id, rname,d));
 				}
 				else if(tmp.trim().startsWith("r:"))
 				{

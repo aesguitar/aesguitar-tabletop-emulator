@@ -12,15 +12,22 @@
 	c:hitdice = "1d10"
 {5}
 	c:name = "Monk"
+	c:hitdice = "1d8"
 {6}
 	c:name = "Paladin"
+	c:hitdice = "1d10"
 {7}
 	c:name = "Ranger"
+	c:hitdice = "1d10"
 {8}
 	c:name = "Rogue"
+	c:hitdice = "1d8"
 {9}
 	c:name = "Sorcerer"
+	c:hitdice = "1d6"
 {10}
 	c:name = "Warlock"
+	c:hitdice = "1d8"
 {11}
 	c:name = "Wizard"
+	c:hitdice = "1d6"
