@@ -415,7 +415,7 @@ public class CreationForm extends JDialog {
 				//System.out.println(heightField.getText());
 				heightFormat = UF.isFloat(heightField.getText().trim());
 				isDone();
-				repaint();
+				heightField.repaint();
 			}
 
 		});
