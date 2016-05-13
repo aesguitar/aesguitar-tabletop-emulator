@@ -19,13 +19,13 @@ public class Character {
 	private String name = "";
 	private Class cl = null;
 	private Race race = null;
-	private float weight = 0;
-	private float height = 0;
+	private double weight = 0;
+	private double height = 0;
 	int level = 0;
-	float experience = 0;
+	double experience = 0;
 	int hitpoints = 0;
 	
-	public Character(int[] stats, String name, float weight, float height, Race race, Class cl)
+	public Character(int[] stats, String name, double weight, double height, Race race, Class cl)
 	{
 		this.setStats(stats);
 		this.setName(name);
@@ -35,7 +35,7 @@ public class Character {
 		this.setCl(cl);
 		level = 1;
 		hitpoints = cl.getDie().getNumSides() + (int)Math.floorDiv(stats[2]-10, 2);
-		System.out.println(hitpoints);
+		//System.out.println(hitpoints);
 		
 	}
 	
@@ -56,8 +56,9 @@ public class Character {
 		try {
 			Scanner in = new Scanner(data);
 			name = in.nextLine().trim();
-			weight = in.nextFloat();
-			height = in.nextFloat();
+			weight = in.nextDouble();
+			height = in.nextDouble();
+			level = in.nextInt();
 			hitpoints = in.nextInt();
 			race = rli.get(in.nextInt());
 			cl = cli.get(in.nextInt());
@@ -82,6 +83,7 @@ public class Character {
 	 *Name
 	 *Weight
 	 *Height
+	 *Level
 	 *Hitpoints
 	 *Race ID
 	 *Class ID
@@ -90,8 +92,9 @@ public class Character {
 	 **/
 	public void writeCharacterToFile() throws IOException
 	{
-		String to_write = name + "\n" + Float.toString(weight) + 
-							"\n" + Float.toString(height) + "\n"
+		String to_write = name + "\n" + Double.toString(weight) + 
+							"\n" + Double.toString(height) + "\n"
+							+ level + "\n"
 							+ hitpoints + "\n" +
 							+ race.getID() + "\n" + cl.getId() +
 							"\n" + stats[0] + "," + stats[1] + "," +
@@ -124,7 +127,7 @@ public class Character {
 	public void printCharacter()
 	{
 		System.out.printf("Name:\t%s\nWeight:\t%f\nHeight:\t%f\n"
-				+ "Race:\t%s\nClass\t%s\nStats:", name,weight,height,race.getName(),cl.getName());
+				+ "Level:\t%d\n" + "Hitpoints:\t%d\n" + "Race:\t%s\nClass\t%s\nStats:", name,weight,height,level, hitpoints, race.getName(),cl.getName());
 		for(int i = 0; i < 6; i++)
 		{
 			System.out.printf("\t%s = %d\n", UF.statsList[i],stats[i]);
@@ -135,14 +138,14 @@ public class Character {
 	/**
 	 * @return the height
 	 */
-	public float getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
 	/**
 	 * @param height the height to set
 	 */
-	public void setHeight(float height) {
+	public void setHeight(double height) {
 		this.height = height;
 	}
 
@@ -205,14 +208,29 @@ public class Character {
 	/**
 	 * @return the weight
 	 */
-	public float getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
 	/**
 	 * @param weight the weight to set
 	 */
-	public void setWeight(float weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+
+	public int getLevel() {
+		// TODO Auto-generated method stub
+		return level;
+	}
+	
+	public int getHP()
+	{
+		return hitpoints;
+	}
+	
+	public void setHP(int val)
+	{
+		hitpoints = val;
 	}
 }

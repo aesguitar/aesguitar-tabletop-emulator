@@ -1,4 +1,4 @@
-package testing;
+package JFXEvents;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;

@@ -1,4 +1,4 @@
-package testing;
+package JFXEvents;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
