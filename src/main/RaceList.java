@@ -194,6 +194,16 @@ public class RaceList{ //An ArrayList containing all available races in the game
 		return -1;
 	}
 	
+	public ArrayList<String> getListOfNames()
+	{
+		ArrayList<String> names = new ArrayList<String>();
+		Iterator<Race> i = racelist.iterator();
+		while(i.hasNext())
+			names.add(i.next().getName());
+		
+		return names;
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		RaceList r = null;

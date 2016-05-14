@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testing.TestMain2Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="547.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
    <children>
-      <TabPane layoutY="24.0" prefHeight="480.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="24.0" prefHeight="480.0" prefWidth="547.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="charTab" closable="false" text="Character">
             <content>
@@ -50,7 +50,7 @@
                               <Label fx:id="nameLbl" text="Name:  " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                               <TextField fx:id="charClass" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <Label fx:id="raceLbl" text="Race:  " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                              <TextField fx:id="charRace" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <TextField fx:id="charRace" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                               <Label text="Level:  " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                               <Label text="Height:  " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                               <TextField fx:id="charLevel" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
@@ -59,7 +59,7 @@
                               <TextField fx:id="charWeight" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                               <Label text="Stats:  " GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                               <Label text="HP:  " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-                              <TextField fx:id="charHP" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                              <TextField fx:id="charHP" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                            </children>
                         </GridPane>
                         <TableView fx:id="statsTable" layoutX="361.0" layoutY="5.0" prefHeight="200.0" prefWidth="151.0">
@@ -74,7 +74,7 @@
           </Tab>
         </tabs>
       </TabPane>
-      <MenuBar prefHeight="21.0" prefWidth="800.0">
+      <MenuBar prefHeight="25.0" prefWidth="547.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>

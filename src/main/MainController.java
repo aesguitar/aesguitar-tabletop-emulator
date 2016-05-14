@@ -1,4 +1,4 @@
-package testing;
+package main;
 
 
 import java.io.File;
@@ -39,7 +39,7 @@ import util.UF;
 import main.Character;
 import javafx.scene.paint.Color;
 
-public class TestMain2Controller {
+public class MainController {
 	private Character ch;
 	private FileChooser fc = new FileChooser();
 	private File charFile;

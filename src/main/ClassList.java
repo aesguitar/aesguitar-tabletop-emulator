@@ -159,6 +159,16 @@ public class ClassList {
 		}
 		return -1;
 	}
+	
+	public ArrayList<String> getListOfNames()
+	{
+		ArrayList<String> names = new ArrayList<String>();
+		Iterator<Class> i = classlist.iterator();
+		while(i.hasNext())
+			names.add(i.next().getName());
+		
+		return names;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
