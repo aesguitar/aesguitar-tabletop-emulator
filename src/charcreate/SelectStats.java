@@ -104,7 +104,7 @@ public class SelectStats extends JDialog {
 		sl_contentPanel.putConstraint(SpringLayout.WEST, statsTable, 10, SpringLayout.WEST, contentPanel);
 		contentPanel.add(statsTable);
 
-		comboBox = new JComboBox(UF.statsList);
+		comboBox = new JComboBox(UF.attrList);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, comboBox, 3, SpringLayout.NORTH, statsTable);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, statsTable);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, comboBox, 156, SpringLayout.EAST, statsTable);
@@ -112,7 +112,7 @@ public class SelectStats extends JDialog {
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(comboBox);
 
-		comboBox_1 = new JComboBox(UF.statsList);
+		comboBox_1 = new JComboBox(UF.attrList);
 		comboBox_1.setSelectedIndex(1);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, comboBox_1, 6, SpringLayout.SOUTH, comboBox);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, comboBox_1, 6, SpringLayout.EAST, statsTable);
@@ -120,7 +120,7 @@ public class SelectStats extends JDialog {
 		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(comboBox_1);
 
-		comboBox_2 = new JComboBox(UF.statsList);
+		comboBox_2 = new JComboBox(UF.attrList);
 		comboBox_2.setSelectedIndex(2);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, comboBox_2, 6, SpringLayout.SOUTH, comboBox_1);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, comboBox_2, 6, SpringLayout.EAST, statsTable);
@@ -128,7 +128,7 @@ public class SelectStats extends JDialog {
 		comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(comboBox_2);
 
-		comboBox_3 = new JComboBox(UF.statsList);
+		comboBox_3 = new JComboBox(UF.attrList);
 		comboBox_3.setSelectedIndex(3);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, comboBox_3, 6, SpringLayout.SOUTH, comboBox_2);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, comboBox_3, 6, SpringLayout.EAST, statsTable);
@@ -136,7 +136,7 @@ public class SelectStats extends JDialog {
 		comboBox_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(comboBox_3);
 
-		comboBox_4 = new JComboBox(UF.statsList);
+		comboBox_4 = new JComboBox(UF.attrList);
 		comboBox_4.setSelectedIndex(4);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, comboBox_4, 6, SpringLayout.SOUTH, comboBox_3);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, comboBox_4, 6, SpringLayout.EAST, statsTable);
@@ -144,7 +144,7 @@ public class SelectStats extends JDialog {
 		comboBox_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(comboBox_4);
 
-		comboBox_5 = new JComboBox(UF.statsList);
+		comboBox_5 = new JComboBox(UF.attrList);
 		comboBox_5.setSelectedIndex(5);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, comboBox_5, 6, SpringLayout.SOUTH, comboBox_4);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, comboBox_5, 6, SpringLayout.EAST, statsTable);

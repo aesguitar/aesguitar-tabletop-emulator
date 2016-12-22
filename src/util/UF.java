@@ -7,7 +7,9 @@ import java.util.regex.Pattern;
 
 //Usefule functions and variables
 public class UF {
-	public static final String[] statsList = {"Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"};//A list of the stats in order
+	public static final String[] attrList = {"Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"};//A list of the stats in order
+	public static final String[] xmlSections = {"Race","Class","Name","Stats","Attributes"};
+	public static final String[] statsList = {"Level","HP","Weight","Height"};
 	public static final File raceLoc = new File("race-list.txt");
 	public static final File classLoc = new File("class-list.txt");
 	public static final Color lightCoral = new Color(240, 128, 128);

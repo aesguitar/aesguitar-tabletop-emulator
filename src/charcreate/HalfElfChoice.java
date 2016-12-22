@@ -68,14 +68,14 @@ public class HalfElfChoice extends JDialog {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(lblNewLabel);
 		
-		comboBox = new JComboBox(Arrays.copyOf(UF.statsList, UF.statsList.length-1));
+		comboBox = new JComboBox(Arrays.copyOf(UF.attrList, UF.attrList.length-1));
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, comboBox, 6, SpringLayout.SOUTH, lblNewLabel);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, comboBox, 0, SpringLayout.WEST, lblNewLabel);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, comboBox, 146, SpringLayout.WEST, lblNewLabel);
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.add(comboBox);
 		
-		comboBox_1 = new JComboBox(Arrays.copyOf(UF.statsList, UF.statsList.length-1));
+		comboBox_1 = new JComboBox(Arrays.copyOf(UF.attrList, UF.attrList.length-1));
 		comboBox_1.setSelectedIndex(1);
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, comboBox_1, 6, SpringLayout.SOUTH, comboBox);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, comboBox_1, 0, SpringLayout.WEST, comboBox);

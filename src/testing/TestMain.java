@@ -111,7 +111,7 @@ public class TestMain {
 				CreateCharacter cc = new CreateCharacter();
 				try {
 					cc.createCharacter();
-				} catch (IOException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -274,13 +274,13 @@ public class TestMain {
 	{
 		for(int i = 0; i < 6; i++)
 		{
-			table.setValueAt(" " + UF.statsList[i], i, 0);
+			table.setValueAt(" " + UF.attrList[i], i, 0);
 		}
 	}
 	
 	private void setStatsTableValues()
 	{
 		for(int i = 0; i < 6; i++)
-			table.setValueAt(String.format("%d%n", loadedCh.getStats()[i]), i, 1);
+			table.setValueAt(String.format("%d%n", loadedCh.getAttrs()[i]), i, 1);
 	}
 }

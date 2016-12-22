@@ -7,22 +7,24 @@ import java.util.ResourceBundle;
 import JFXEvents.FocusLostEvent;
 import JFXEvents.JFXCustomEvents;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.ClassList;
 import main.IdConflictException;
-import main.Race;
 import main.RaceList;
 import util.UF;
 
@@ -30,6 +32,7 @@ public class CharCreateTestController {
 
 	private RaceList rl;
 	private ClassList cl;
+	private ObservableList<JFXStatsTableRow> data = FXCollections.observableArrayList();
 
 	@FXML
 	private ResourceBundle resources;
@@ -41,7 +44,7 @@ public class CharCreateTestController {
 	private AnchorPane mainPane;
 
 	@FXML
-	private Button save, cancel;
+	private Button save, cancel, rollBtn;
 
 	@FXML
 	private TextField nameField, heightField, weightField;
@@ -51,6 +54,12 @@ public class CharCreateTestController {
 
 	@FXML
 	private Label errorLbl;
+
+	@FXML
+	private TableView<JFXStatsTableRow> statsTable;
+
+	@FXML
+	private TableColumn nameCol, baseCol, modifierCol, finalCol;
 
 	@SuppressWarnings("unchecked")
 	@FXML
@@ -95,7 +104,14 @@ public class CharCreateTestController {
 			{
 				if(e.getEventType().equals(ActionEvent.ACTION))
 				{
-					rl.get(raceField.getValue()).printRace();
+					System.out.println("Race selected: " + raceField.getValue());
+					int[] modifiers = rl.get(raceField.getValue()).getBonus();
+					for(int i = 0; i < 6; i++)
+					{
+						data.get(i).setModifier(modifiers[i]);
+					}
+
+					statsTable.refresh();
 				}
 			}
 		});
@@ -120,14 +136,14 @@ public class CharCreateTestController {
 					{
 						heightField.setStyle("-fx-text-fill: red;");
 						if(!errorLbl.getText().contains("Height must be a number."))
-							errorLbl.setText(errorLbl.getText().concat("Height must be a number."));
+							errorLbl.setText(errorLbl.getText().concat("Height must be a number. "));
 					}
 					else
 					{
 						if(UF.isInt(heightField.getText()))
 							heightField.setText(heightField.getText().trim().concat(".0"));
 						heightField.setStyle("-fx-text-fill: black;");
-						errorLbl.setText(errorLbl.getText().replaceAll("Height must be a number.", ""));
+						errorLbl.setText(errorLbl.getText().replaceAll("Height must be a number. ", ""));
 					}
 			}
 		});
@@ -163,5 +179,32 @@ public class CharCreateTestController {
 			}
 		});
 
+		rollBtn.addEventHandler(Event.ANY, new EventHandler()
+		{
+			public void handle(Event e)
+			{
+				if(e.getEventType().equals(MouseEvent.MOUSE_CLICKED))
+				{
+					
+				}
+			}
+		});
+
+		initializeStatsTable();
+		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+		baseCol.setCellValueFactory(new PropertyValueFactory<>("base"));
+		modifierCol.setCellValueFactory(new PropertyValueFactory<>("modifier"));
+		finalCol.setCellValueFactory(new PropertyValueFactory<>("finalVal"));
+
+	}
+
+	public void initializeStatsTable()
+	{
+		for(int i = 0; i < 6; i++)
+		{
+			data.add(new JFXStatsTableRow(UF.attrList[i], 0, 0, 0));
+		}
+
+		statsTable.setItems(data);
 	}
 }

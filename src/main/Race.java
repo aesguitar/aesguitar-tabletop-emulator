@@ -43,7 +43,7 @@ public class Race {
 		{
 			if(bonus[i] > 0)
 			{
-				System.out.printf("%s:\t%d\n", UF.statsList[i], bonus[i]);
+				System.out.printf("%s:\t%d\n", UF.attrList[i], bonus[i]);
 			}
 		}
 	}

@@ -2,19 +2,8 @@ package main;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
 import java.util.ResourceBundle;
-import java.util.Scanner;
-
-import JFXEvents.FocusGainedEvent;
-import JFXEvents.FocusLostEvent;
-import JFXEvents.JFXCustomEvents;
 import JFXEvents.JavaFXStat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,12 +21,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import util.UF;
 import main.Character;
-import javafx.scene.paint.Color;
 
 public class MainController {
 	private Character ch;
@@ -126,10 +112,10 @@ public class MainController {
 
 		if(ch != null)
 		{
-			int[] stats = ch.getStats();
+			int[] stats = ch.getAttrs();
 			for(int i = 0; i < stats.length; i++)
 			{
-				data.add(new JavaFXStat(UF.statsList[i], stats[i]));
+				data.add(new JavaFXStat(UF.attrList[i], stats[i]));
 			}
 			
 			statsTable.setItems(data);

@@ -593,7 +593,7 @@ public class CreationForm extends JDialog {
 	{
 		for(int i = 0; i < 6; i++)
 		{
-			table.getModel().setValueAt(UF.statsList[i], i, 0);
+			table.getModel().setValueAt(UF.attrList[i], i, 0);
 		}
 	}
 

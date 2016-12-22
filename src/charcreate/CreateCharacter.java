@@ -101,7 +101,7 @@ public class CreateCharacter {
 	}
 	 */
 
-	public void createCharacter() throws IOException
+	public void createCharacter() throws Exception
 	{
 		CreationForm cf = new CreationForm(rl,cl);
 		int confirm = 0;
@@ -121,7 +121,7 @@ public class CreateCharacter {
 		CreateCharacter c = new CreateCharacter();
 		try {
 			c.createCharacter();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
