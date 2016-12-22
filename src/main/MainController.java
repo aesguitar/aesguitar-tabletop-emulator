@@ -80,7 +80,12 @@ public class MainController {
 					charFile = fc.showOpenDialog(null);
 					if(charFile != null)
 					{
-						ch = new Character(charFile);
+						try {
+							ch = new Character(charFile);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						setStatsFields();
 					}
 				}
@@ -97,7 +102,12 @@ public class MainController {
 					charFile = fc.showOpenDialog(null);
 					if(charFile != null)
 					{
-						ch = new Character(charFile);
+						try {
+							ch = new Character(charFile);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						setStatsFields();
 					}
 				}

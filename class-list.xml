@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<classlist>
+  <Class id="1">
+    <Name>Bard</Name>
+    <Hit_Dice>1d8</Hit_Dice>
+  </Class>
+  <Class id="2">
+    <Name>Cleric</Name>
+    <Hit_Dice>1d8</Hit_Dice>
+  </Class>
+  <Class id="3">
+    <Name>Druid</Name>
+    <Hit_Dice>1d8</Hit_Dice>
+  </Class>
+  <Class id="4">
+    <Name>Fighter</Name>
+    <Hit_Dice>1d10</Hit_Dice>
+  </Class>
+  <Class id="5">
+    <Name>Monk</Name>
+    <Hit_Dice>1d8</Hit_Dice>
+  </Class>
+  <Class id="6">
+    <Name>Paladin</Name>
+    <Hit_Dice>1d10</Hit_Dice>
+  </Class>
+  <Class id="7">
+    <Name>Ranger</Name>
+    <Hit_Dice>1d10</Hit_Dice>
+  </Class>
+  <Class id="8">
+    <Name>Rogue</Name>
+    <Hit_Dice>1d8</Hit_Dice>
+  </Class>
+  <Class id="9">
+    <Name>Sorcerer</Name>
+    <Hit_Dice>1d6</Hit_Dice>
+  </Class>
+  <Class id="10">
+    <Name>Warlock</Name>
+    <Hit_Dice>1d8</Hit_Dice>
+  </Class>
+  <Class id="11">
+    <Name>Wizard</Name>
+    <Hit_Dice>1d6</Hit_Dice>
+  </Class>
+</classlist>

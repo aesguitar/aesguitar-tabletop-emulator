@@ -14,6 +14,7 @@ import util.UF;
 
 import java.awt.Font;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -34,6 +35,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import main.Class;
 import main.ClassList;
@@ -110,24 +114,16 @@ public class CreationForm extends JDialog {
 			{
 				RaceList rlist = new RaceList(new File("race-list.txt"));
 				ClassList clist = new ClassList(new File("class-list.txt"));
+					
 				try {
 					rlist.buildList();
-				} catch (IdConflictException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
 					clist.buildList();
-				} catch (IdConflictException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
+				} catch (ParserConfigurationException | SAXException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
 				CreationForm dialog = new CreationForm(rlist,clist);
 				dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 				dialog.setVisible(true);

@@ -31,7 +31,7 @@ public class Race {
 		return bonus;
 	}
 	
-	public int getID()
+	public int getId()
 	{
 		return id;
 	}

@@ -38,14 +38,14 @@ public class Dice {
 			else
 				numSides = 0;
 
-			if(diceDesc.substring(m.end(), m.end()+1).equalsIgnoreCase("m")&&!m.hitEnd())
+			if(diceDesc.contains("m"))
 			{
 				if(m.find())
 					modifier = Integer.parseInt(m.group());
 				else
 					modifier = 0;
 			}
-			if(diceDesc.substring(m.end(), m.end()+1).equalsIgnoreCase("r")&&!m.hitEnd())
+			if(diceDesc.contains("r"))
 			{
 				if(m.find())
 					rule = Integer.parseInt(m.group());

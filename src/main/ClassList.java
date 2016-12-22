@@ -2,13 +2,31 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import util.Dice;
 import util.Timer;
+import util.UF;
 
 public class ClassList {
 	
@@ -22,91 +40,34 @@ public class ClassList {
 	}
 
 	//Builds the list of Classes
-	public void buildList() throws IdConflictException, ParseException
+	public void buildList() throws ParserConfigurationException, IOException, SAXException 
 	{
-		Scanner in = null;
-		//ArrayList<Class> rlist = new ArrayList<Class>();
-		int lineNumber = 1;
-		int[] b = new int[6];
-		int id = 0;
-		Dice d = null;
-		String rname = "";
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(listLoc);
 
-		try {
-			in = new Scanner(listLoc);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//optional, but recommended
+		//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+		doc.getDocumentElement().normalize();
+		
+		NodeList nl = doc.getElementsByTagName("Class");
+		
+		for(int i = 0; i < nl.getLength(); i++)
+		{
+			Element e = (Element)nl.item(i);
+			int tid = Integer.parseInt(e.getAttribute("id"));
+			String name = elementValue(e,"Name",0);
+			Dice hd = new Dice(elementValue(e,"Hit_Dice",0));
+			classlist.add(new Class(tid,name,hd));		
 		}
-		lineNumber++;
-		String line = in.nextLine().trim();
-		String tmp = line.trim();
-		while(in.hasNextLine())
-		{		
-
-			//System.out.println(tmp);
-			if(!tmp.startsWith("#") && !tmp.equalsIgnoreCase(""))
-			{
-				if(tmp.trim().startsWith("{"))
-				{
-
-					for(int i = 0; i < b.length; i++)
-						b[i] = 0;
-
-					String ids = tmp.replaceAll("\\{", "").replaceAll("\\}", "");
-					id = Integer.parseInt(ids);
-					
-					//System.out.printf("id = %d\n", id);
-					tmp = in.nextLine().trim();
-					lineNumber++;
-					//System.out.println(tmp);
-					while(tmp.startsWith("c:") || tmp.startsWith("#"))
-					{
-						if(tmp.startsWith("#"))
-						{
-							tmp = in.nextLine().trim();
-							lineNumber++;
-							continue;
-						}
-						tmp = tmp.replaceAll("c:", "");
-						if(tmp.startsWith("name"))
-						{
-							tmp = tmp.replaceFirst("name","").trim().replace("=", "").trim().replaceAll("\"", "");
-							rname = tmp;
-							if(!isIdUnique(id))
-								throw new IdConflictException("Class ID conflict: " + id + "; " + rname + " and " + get(id).getName() + ". Line number " + (lineNumber-2));
-							//System.out.printf("name = %s\n", rname);
-						}
-						else if(tmp.startsWith("hitdice"))
-						{
-							tmp.replaceFirst("hitdice", "").trim().replace("=", "").trim().replaceAll("\"", "");
-							d = new Dice(tmp);
-						}
-						else
-							throw new ParseException("Unknown Parameter: " + line.replaceAll("r:", ""), lineNumber);
-						if(in.hasNextLine())
-							{tmp = in.nextLine().trim();lineNumber++;}
-					}
-					/*if(!isIdUnique(id))
-						throw new IdConflictException("Class ID conflict: " + id + "; " + rname + " and " + get(id).getName() + ". Line number " + (lineNumber-5));*/
-					classlist.add(new Class(id, rname,d));
-				}
-				else if(tmp.trim().startsWith("r:"))
-				{
-					throw new ParseException("ID missing at line " + (lineNumber-2) + ".",lineNumber);
-				}
-			}
-			else{
-				line = in.nextLine();
-				tmp =line;
-				lineNumber++;
-			}
-		}
-		/*System.out.printf("Class list: \n\n");
-		Iterator<Class> it = Classlist.iterator();
-		while(it.hasNext())
-		{it.next().printClass(); System.out.println();}*/
-
+		
+		
+		System.out.println(nl.getLength());
+	}
+	
+	private String elementValue(Element e, String tag, int index)
+	{
+		return e.getElementsByTagName(tag).item(index).getTextContent();
 	}
 	
 	public Class get(String name)
@@ -175,10 +136,10 @@ public class ClassList {
 		ClassList r = null;
 		Timer t = new Timer();
 		t.start();
-		r = new ClassList(new File("class-list.txt"));
+		r = new ClassList(UF.classLoc);
 		try {
 			r.buildList();
-		} catch (IdConflictException | ParseException e) {
+		} catch (ParserConfigurationException | IOException | SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -1,8 +1,13 @@
 package testing;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ResourceBundle;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import JFXEvents.FocusLostEvent;
 import JFXEvents.JFXCustomEvents;
@@ -44,7 +49,7 @@ public class CharCreateTestController {
 	private AnchorPane mainPane;
 
 	@FXML
-	private Button save, cancel, rollBtn;
+	private Button save, cancel, rollBttn;
 
 	@FXML
 	private TextField nameField, heightField, weightField;
@@ -71,10 +76,11 @@ public class CharCreateTestController {
 		try {
 			rl.buildList();
 			cl.buildList();
-		} catch (IdConflictException | ParseException e1) {
+		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 
 		ObservableList<String> orl = FXCollections.observableArrayList(rl.getListOfNames());
 		raceField.setItems(orl);
@@ -179,7 +185,7 @@ public class CharCreateTestController {
 			}
 		});
 
-		rollBtn.addEventHandler(Event.ANY, new EventHandler()
+		rollBttn.addEventHandler(Event.ANY, new EventHandler()
 		{
 			public void handle(Event e)
 			{

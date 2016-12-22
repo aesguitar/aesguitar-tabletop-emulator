@@ -2,13 +2,25 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import util.Dice;
 import util.Timer;
+import util.UF;
 
 public class RaceList{ //An ArrayList containing all available races in the game (from a file)
 
@@ -22,127 +34,40 @@ public class RaceList{ //An ArrayList containing all available races in the game
 	}
 
 	//Builds the list of races
-	public void buildList() throws IdConflictException, ParseException
+	public void buildList() throws ParserConfigurationException, SAXException, IOException
 	{
-		Scanner in = null;
-		//ArrayList<Race> rlist = new ArrayList<Race>();
-		int lineNumber = 1;
-		int[] b = new int[6];
-		int id = 0;
-		String rname = "";
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(listLoc);
 
-		try {
-			in = new Scanner(listLoc);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		lineNumber++;
-		String line = in.nextLine().trim();
-		String tmp = line.trim();
-		while(in.hasNextLine())
-		{		
+		//optional, but recommended
+		//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+		doc.getDocumentElement().normalize();
 
-			//System.out.println(tmp);
-			if(!tmp.startsWith("#") && !tmp.equalsIgnoreCase(""))
+		NodeList nl = doc.getElementsByTagName("Race");
+
+		for(int i = 0; i < nl.getLength(); i++)
+		{
+			Element e = (Element)nl.item(i);
+			int tid = Integer.parseInt(e.getAttribute("id"));
+			String name = elementValue(e,"Name",0);
+			int[] mods = new int[6];
+			for(int j = 0; j < 6; j++)
 			{
-				if(tmp.trim().startsWith("{"))
-				{
-
-					for(int i = 0; i < b.length; i++)
-						b[i] = 0;
-
-					String ids = tmp.replaceAll("\\{", "").replaceAll("\\}", "");
-					id = Integer.parseInt(ids);
-					
-					//System.out.printf("id = %d\n", id);
-					tmp = in.nextLine().trim();
-					lineNumber++;
-					//System.out.println(tmp);
-					while(tmp.startsWith("r:") || tmp.startsWith("#"))
-					{
-						if(tmp.startsWith("#"))
-						{
-							tmp = in.nextLine().trim();
-							lineNumber++;
-							continue;
-						}
-						tmp = tmp.replaceAll("r:", "");
-						if(tmp.startsWith("name"))
-						{
-							tmp = tmp.replaceFirst("name","").trim().replace("=", "").trim().replaceAll("\"", "");
-							rname = tmp;
-							if(!isIdUnique(id))
-								throw new IdConflictException("Race ID conflict: " + id + "; " + rname + " and " + get(id).getName() + ". Line number " + (lineNumber-2));
-							//System.out.printf("name = %s\n", rname);
-						}
-						else if(tmp.startsWith("bonus"))
-						{
-							//System.out.println(tmp);
-							tmp = tmp.replaceFirst("bonus","").trim().replace("=", "").trim().replaceAll("\"", "").replaceAll(",", "");
-							tmp = tmp.toLowerCase();
-							if(tmp.startsWith("str"))
-							{
-								tmp = tmp.replaceAll("strength", "");
-								b[0] = Integer.parseInt(tmp);
-							}
-							else if(tmp.startsWith("dex"))
-							{
-								tmp = tmp.replaceAll("dexterity", "");
-								b[1] = Integer.parseInt(tmp);
-							}
-							else if(tmp.startsWith("con"))
-							{
-								tmp = tmp.replaceAll("constitution", "");
-								b[2] = Integer.parseInt(tmp);
-							}
-							else if(tmp.startsWith("int"))
-							{
-								tmp = tmp.replaceAll("intelligence", "");
-								b[3] = Integer.parseInt(tmp);
-							}
-							else if(tmp.startsWith("wis"))
-							{
-								tmp = tmp.replaceAll("wisdom", "");
-								b[4] = Integer.parseInt(tmp);
-							}
-							else if(tmp.startsWith("cha"))
-							{
-								tmp = tmp.replaceAll("charisma", "");
-								b[5] = Integer.parseInt(tmp);
-							}
-							else
-							{
-								throw new ParseException("Unknown bonus: \"" + tmp.substring(0, tmp.length()-1) + "\" at line " + (lineNumber-1), lineNumber);
-							}
-						}
-						else
-							throw new ParseException("Unknown Parameter: " + line.replaceAll("r:", ""), lineNumber);
-						if(in.hasNextLine())
-							{tmp = in.nextLine().trim();lineNumber++;}
-					}
-					/*if(!isIdUnique(id))
-						throw new IdConflictException("Race ID conflict: " + id + "; " + rname + " and " + get(id).getName() + ". Line number " + (lineNumber-5));*/
-					racelist.add(new Race(id, rname, Arrays.copyOf(b, b.length)));
-				}
-				else if(tmp.trim().startsWith("r:"))
-				{
-					throw new ParseException("ID missing at line " + (lineNumber-2) + ".",lineNumber);
-				}
+				mods[j] = Integer.parseInt(elementValue(e,UF.attrList[j],0));
 			}
-			else{
-				line = in.nextLine();
-				tmp =line;
-				lineNumber++;
-			}
+			racelist.add(new Race(tid,name,mods));			
 		}
-		/*System.out.printf("Race list: \n\n");
-		Iterator<Race> it = racelist.iterator();
-		while(it.hasNext())
-		{it.next().printRace(); System.out.println();}*/
+
+
+		System.out.println(nl.getLength());
 
 	}
-	
+	private String elementValue(Element e, String tag, int index)
+	{
+		return e.getElementsByTagName(tag).item(index).getTextContent();
+	}
+
 	public Race get(String name)
 	{
 		Iterator<Race> it = racelist.iterator();
@@ -156,19 +81,19 @@ public class RaceList{ //An ArrayList containing all available races in the game
 		}
 		return null;
 	}
-	
+
 	//returns the race with the specific race id
 	public Race get(int raceId)
 	{
 		for(int i = 0; i < racelist.size(); i++)
 		{
-			if(racelist.get(i).getID() == raceId)
+			if(racelist.get(i).getId() == raceId)
 				return racelist.get(i);
 		}
-		
+
 		return null;
 	}
-	
+
 	//returns the race list as an ArrayList
 	public ArrayList<Race> getRaceList()
 	{
@@ -179,7 +104,7 @@ public class RaceList{ //An ArrayList containing all available races in the game
 	{
 		return (get(id) == null);			
 	}
-	
+
 	public int getRaceId(String name)
 	{
 		Iterator<Race> it = racelist.iterator();
@@ -188,19 +113,19 @@ public class RaceList{ //An ArrayList containing all available races in the game
 			Race r = it.next();
 			if(name.equalsIgnoreCase(r.getName()))
 			{
-				return r.getID();
+				return r.getId();
 			}
 		}
 		return -1;
 	}
-	
+
 	public ArrayList<String> getListOfNames()
 	{
 		ArrayList<String> names = new ArrayList<String>();
 		Iterator<Race> i = racelist.iterator();
 		while(i.hasNext())
 			names.add(i.next().getName());
-		
+
 		return names;
 	}
 
@@ -209,10 +134,10 @@ public class RaceList{ //An ArrayList containing all available races in the game
 		RaceList r = null;
 		Timer t = new Timer();
 		t.start();
-		r = new RaceList(new File("race-list.txt"));
+		r = new RaceList(UF.raceLoc);
 		try {
 			r.buildList();
-		} catch (IdConflictException | ParseException e) {
+		} catch (ParserConfigurationException | SAXException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -220,7 +145,7 @@ public class RaceList{ //An ArrayList containing all available races in the game
 		System.out.printf("Elapsed time: %f\n\n", t.difference()/1000.0);
 		Iterator<Race> i = r.getRaceList().iterator();
 		while(i.hasNext())
-			{i.next().printRace();
+		{i.next().printRace();
 		System.out.println("");}
 		/**/
 	}

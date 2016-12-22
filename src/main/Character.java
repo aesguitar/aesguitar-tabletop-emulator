@@ -22,11 +22,15 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import util.FileIO;
 import util.UF;
 
 public class Character {
+	private RaceList rli = new RaceList(UF.raceLoc);
+	private ClassList cli = new ClassList(UF.classLoc);
 	private int[] attrs = new int[6];
 	private String name = "";
 	private Class cl = null;
@@ -51,55 +55,17 @@ public class Character {
 
 	}
 
-	public Character(File data)
+	public Character(File data) throws Exception
 	{
-		RaceList rli = new RaceList(UF.raceLoc);
-		ClassList cli = new ClassList(UF.classLoc);
-		try {
-			rli.buildList();
-			cli.buildList();
-		} catch (IdConflictException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			Scanner in = new Scanner(data);
-			name = in.nextLine().trim();
-			weight = in.nextDouble();
-			height = in.nextDouble();
-			level = in.nextInt();
-			hitpoints = in.nextInt();
-			race = rli.get(in.nextInt());
-			cl = cli.get(in.nextInt());
-			int i = 0;
-			in.useDelimiter("\\s*,\\s*");
-			while(in.hasNext())
-			{
-				String test = in.next();
-				//System.out.println("test = " + test);
-				attrs[i] = Integer.parseInt(test.trim());
-				i++;
-			}
-			in.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		rli.buildList();
+		cli.buildList();
+		
+		readCharXML(data);
 	}
 
 	/**
-	 *Writes the character information to file in this order:
-	 *Name
-	 *Weight
-	 *Height
-	 *Level
-	 *Hitpoints
-	 *Race ID
-	 *Class ID
-	 *Stats (comma separated) 
+	 *Writes the character information to XML
 	 * @throws Exception 
 	 **/
 	public void writeCharacterToFile() throws Exception
@@ -207,6 +173,66 @@ public class Character {
 	{
 		e.appendChild(doc.createTextNode(data));
 	}
+
+	private void readCharXML(File cf) throws Exception
+	{
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(cf);
+
+		//optional, but recommended
+		//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+		doc.getDocumentElement().normalize();
+
+		NodeList nl = doc.getElementsByTagName("character");
+		//System.out.printf("Number of nodes: %d\n",nl.getLength());
+		Node n = nl.item(0);
+		Element e = (Element)n;
+		for(int i = 0; i < UF.xmlSections.length; i++)
+		{
+			String elem = null;
+			if(UF.xmlSections[i].equalsIgnoreCase("stats"))
+			{
+				for(int j = 0; j < UF.statsList.length; j++)
+				{
+					elem = elementValue(e,UF.statsList[j],0);
+					setStatValueSTR(UF.statsList[j],elem);
+				}
+			}
+			else if(UF.xmlSections[i].equalsIgnoreCase("Attributes"))
+			{
+				for(int j = 0; j < UF.attrList.length; j++)
+				{
+					elem = elementValue(e,UF.attrList[j],0);
+					attrs[j]=Integer.parseInt(elem);
+				}
+			}
+			else{
+				elem = elementValue(e,UF.xmlSections[i],0);
+				switch(i){
+				case 0: 
+					race = rli.get(elem);
+					break;
+				case 1: 
+					cl = cli.get(elem);
+					break;
+				case 2: 
+					name = elem;
+					break;
+				default:
+					throw new Exception("Unknown value: " + UF.xmlSections[i]);
+				}
+			}
+		}
+	}
+
+	private String elementValue(Element e, String tag, int index)
+	{
+		return e.getElementsByTagName(tag).item(index).getTextContent();
+	}
+
+
+
 
 	public void printCharacter()
 	{
@@ -330,6 +356,20 @@ public class Character {
 			return Integer.toString(hitpoints);
 		else
 			return null;
+
+	}
+	public void setStatValueSTR(String valName, String value) throws Exception
+	{
+		if(valName.equalsIgnoreCase("weight"))
+			weight = Double.parseDouble(value);
+		else if(valName.equalsIgnoreCase("height"))
+			height = Double.parseDouble(value);
+		else if (valName.equalsIgnoreCase("level"))
+			level = Integer.parseInt(value);
+		else if (valName.equalsIgnoreCase("hp") || valName.equalsIgnoreCase("hitpoints"))
+			hitpoints = Integer.parseInt(value);
+		else
+			throw new Exception("Unknown stat: " + valName);
 
 	}
 }

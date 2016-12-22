@@ -10,8 +10,8 @@ public class UF {
 	public static final String[] attrList = {"Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"};//A list of the stats in order
 	public static final String[] xmlSections = {"Race","Class","Name","Stats","Attributes"};
 	public static final String[] statsList = {"Level","HP","Weight","Height"};
-	public static final File raceLoc = new File("race-list.txt");
-	public static final File classLoc = new File("class-list.txt");
+	public static final File raceLoc = new File("race-list.xml");
+	public static final File classLoc = new File("class-list.xml");
 	public static final Color lightCoral = new Color(240, 128, 128);
 	public static final File currDir = new File(System.getProperty("user.home") + "\\workspace\\rpg\\");
 	private static final Pattern  doubleReg = Pattern.compile("[\\x00-\\x20]*[+-]?(((((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)([eE][+-]?(\\p{Digit}+))?)|(\\.((\\p{Digit}+))([eE][+-]?(\\p{Digit}+))?)|(((0[xX](\\p{XDigit}+)(\\.)?)|(0[xX](\\p{XDigit}+)?(\\.)(\\p{XDigit}+)))[pP][+-]?(\\p{Digit}+)))[fFdD]?))[\\x00-\\x20]*");

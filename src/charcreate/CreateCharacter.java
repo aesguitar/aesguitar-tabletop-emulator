@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import main.Character;
 import main.ClassList;
@@ -40,20 +43,14 @@ public class CreateCharacter {
 	private String name = ""; //Character name
 	private File classListLoc = new File("class-list.txt"); //Location of the classlist 
 
-	public CreateCharacter() //runs the character creation
+	public CreateCharacter() throws ParserConfigurationException, IOException, SAXException //runs the character creation
 	{
 		for(int i = 0; i < 6; i++)
 			stats[i] = 0;
-		try {
+		
 			cl.buildList();
 			rl.buildList();
-		} catch (IdConflictException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		//createCharacter();
 		//printCharacter();
 	};
@@ -118,14 +115,14 @@ public class CreateCharacter {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		CreateCharacter c = new CreateCharacter();
+		CreateCharacter c;
 		try {
+			c = new CreateCharacter();
 			c.createCharacter();
-		} catch (Exception e) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-
 	}
 
 }

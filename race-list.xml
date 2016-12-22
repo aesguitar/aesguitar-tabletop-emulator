@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<racelist>
+  <Race id="1">
+    <Name>Dragonborn</Name>
+    <Modifiers>
+      <Strength>2</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>1</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="2">
+    <Name>Hill Dwarf</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>2</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>1</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="3">
+    <Name>Mountain Dwarf</Name>
+    <Modifiers>
+      <Strength>2</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>2</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="4">
+    <Name>Duergar</Name>
+    <Modifiers>
+      <Strength>1</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>2</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="5">
+    <Name>High Elf</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>2</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>1</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="6">
+    <Name>Wood Elf</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>2</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>1</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="7">
+    <Name>Dark Elf</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>2</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>1</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="8">
+    <Name>Forest Gnome</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>1</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>2</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="9">
+    <Name>Rock Gnome</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>1</Constitution>
+      <Intelligence>2</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="10">
+    <Name>Deep Gnome</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>1</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>2</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="11">
+    <Name>Half-elf</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>2</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="12">
+    <Name>Half-orc</Name>
+    <Modifiers>
+      <Strength>2</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>1</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="13">
+    <Name>Lightfoot Halfling</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>2</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>1</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="14">
+    <Name>Stout Halfling</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>2</Dexterity>
+      <Constitution>1</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="15">
+    <Name>Human</Name>
+    <Modifiers>
+      <Strength>1</Strength>
+      <Dexterity>1</Dexterity>
+      <Constitution>1</Constitution>
+      <Intelligence>1</Intelligence>
+      <Wisdom>1</Wisdom>
+      <Charisma>1</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="16">
+    <Name>Tiefling</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>1</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>2</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="17">
+    <Name>Aarakocra</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>2</Dexterity>
+      <Constitution>0</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>1</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="18">
+    <Name>Air Genasi</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>1</Dexterity>
+      <Constitution>2</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="19">
+    <Name>Fire Genasi</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>2</Constitution>
+      <Intelligence>1</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="20">
+    <Name>Earth Genasi</Name>
+    <Modifiers>
+      <Strength>1</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>2</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="21">
+    <Name>Water Genasi</Name>
+    <Modifiers>
+      <Strength>0</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>2</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>2</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+  <Race id="22">
+    <Name>Goliath</Name>
+    <Modifiers>
+      <Strength>2</Strength>
+      <Dexterity>0</Dexterity>
+      <Constitution>1</Constitution>
+      <Intelligence>0</Intelligence>
+      <Wisdom>0</Wisdom>
+      <Charisma>0</Charisma>
+    </Modifiers>
+  </Race>
+</racelist>

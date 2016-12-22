@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="266.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testing.RollTestController">
+   <children>
+      <GridPane prefHeight="333.0" prefWidth="266.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="10.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="90.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="166.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="field1" GridPane.columnIndex="1" />
+            <TextField fx:id="field2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="field3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="field4" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="field5" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="field6" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="stat1" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+            <ComboBox fx:id="stat2" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox fx:id="stat3" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <ComboBox fx:id="stat4" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <ComboBox fx:id="stat5" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <ComboBox fx:id="stat6" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <children>
+                  <Button fx:id="roll" mnemonicParsing="false" text="Roll" />
+                  <Button fx:id="accept" mnemonicParsing="false" text="Accept" />
+                  <Button fx:id="cancel" mnemonicParsing="false" text="Cancel" />
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
