@@ -60,7 +60,7 @@ public class RaceList{ //An ArrayList containing all available races in the game
 		}
 
 
-		System.out.println(nl.getLength());
+		//System.out.println(nl.getLength());
 
 	}
 	private String elementValue(Element e, String tag, int index)

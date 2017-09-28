@@ -62,7 +62,7 @@ public class ClassList {
 		}
 		
 		
-		System.out.println(nl.getLength());
+		//System.out.println(nl.getLength());
 	}
 	
 	private String elementValue(Element e, String tag, int index)

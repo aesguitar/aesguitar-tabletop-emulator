@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class JavaFXStat {
 	
-	private final SimpleStringProperty name;
-	private final SimpleIntegerProperty value;
+	private SimpleStringProperty name;
+	private SimpleIntegerProperty value;
 	
 	public JavaFXStat(String name, int value)
 	{
@@ -28,5 +28,10 @@ public class JavaFXStat {
 	public Integer getValue()
 	{
 		return value.get();
+	}
+	
+	public void setValue(int value)
+	{
+		this.value = new SimpleIntegerProperty(value);
 	}
 }

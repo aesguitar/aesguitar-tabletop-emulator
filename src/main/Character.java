@@ -231,7 +231,18 @@ public class Character {
 		return e.getElementsByTagName(tag).item(index).getTextContent();
 	}
 
-
+	public void reload(Character ch)
+	{
+		name = ch.name;
+		attrs = ch.attrs;
+		cl = ch.cl;
+		race = ch.race;
+		weight = ch.weight;
+		height = ch.height;
+		level = ch.level;
+		hitpoints = ch.hitpoints;
+		experience = ch.experience;
+	}
 
 
 	public void printCharacter()
@@ -343,8 +354,13 @@ public class Character {
 	{
 		hitpoints = val;
 	}
+	
+	public Character getCharacter()
+	{
+		return this;
+	}
 
-	public String getStatValueSTR(String valName)
+ 	public String getStatValueSTR(String valName)
 	{
 		if(valName.equalsIgnoreCase("weight"))
 			return Double.toString(weight);

@@ -1,4 +1,4 @@
-package main;
+package old;
 
 
 import java.io.File;
@@ -38,7 +38,7 @@ public class MainController {
 	private URL location;
 
 	@FXML
-	private MenuItem openFile;
+	private MenuItem openFile, newChar;
 
 	@FXML
 	private TextField charName, charClass, charRace, charLevel, charHeight, charWeight, charHP;
