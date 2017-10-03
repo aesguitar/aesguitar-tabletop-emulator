@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<character>
+  <Race>Dragonborn</Race>
+  <Class>Bard</Class>
+  <Name>Bobby Roberts</Name>
+  <Stats>
+    <Level>1</Level>
+    <HP>4</HP>
+    <Weight>50.7</Weight>
+    <Height>2.56</Height>
+  </Stats>
+  <Attributes>
+    <Strength>3</Strength>
+    <Dexterity>2</Dexterity>
+    <Constitution>3</Constitution>
+    <Intelligence>4</Intelligence>
+    <Wisdom>5</Wisdom>
+    <Charisma>6</Charisma>
+  </Attributes>
+</character>
